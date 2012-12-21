@@ -3,7 +3,6 @@ package nl.ecb.samp.ericrp.dialog.user;
 import javax.security.auth.login.AccountNotFoundException;
 
 import net.gtaun.shoebill.Shoebill;
-import net.gtaun.shoebill.constant.DialogStyle;
 import net.gtaun.shoebill.data.Color;
 import net.gtaun.shoebill.event.DialogEventHandler;
 import net.gtaun.shoebill.event.dialog.DialogCancelEvent;
@@ -18,39 +17,42 @@ import nl.ecb.samp.ericrp.exceptions.playeridAlreadyLoggedInException;
 
 
 public class LoginDialog extends AbstractInputDialog {
-	private EventManager eventManager;
-	private AccountController con;
-	public LoginDialog(Player player, Shoebill shoebill,
-			EventManager rootEventManager, String info, AccountController con) {
+	private final EventManager eventManager;
+	private final AccountController con;
+	public LoginDialog(final Player player, final Shoebill shoebill,
+			final EventManager rootEventManager, final String info, final AccountController con) {
 		super(player, shoebill, rootEventManager, info);
 		this.con = con;
 		this.eventManager = new ManagedEventManager(rootEventManager);
 		eventManager.registerHandler(DialogResponseEvent.class, super.getDialog(), dialogEventHandler, HandlerPriority.NORMAL);
 		eventManager.registerHandler(DialogCancelEvent.class, super.getDialog(), dialogEventHandler, HandlerPriority.NORMAL);
 	}
+
 	@Override
 	public void show(){
 		this.setCaption("Login");
+		this.setButtonCancel("Quit");
 		super.show();
 	}
-	private DialogEventHandler dialogEventHandler = new DialogEventHandler()
+	private final DialogEventHandler dialogEventHandler = new DialogEventHandler()
 	{
-		public void onDialogResponse(DialogResponseEvent event)
+		public void onDialogResponse(final DialogResponseEvent event)
 		{	
-			Player p = event.getPlayer();
+			final Player p = event.getPlayer();
 			try {
 				con.login(p, p.getName(), event.getInputText());
-			} catch (AccountNotFoundException e) {
+			} catch (final AccountNotFoundException e) {
 				new LoginDialog(player, shoebill, eventManager, "Wrond password please try again \nPassword: ",con).show();
-			} catch (playeridAlreadyLoggedInException e) {
+			} catch (final playeridAlreadyLoggedInException e) {
 				p.sendMessage(Color.RED, "ERROR: you are already logged in");
 			}
 		}
 
-		public void onDialogCancel(DialogCancelEvent event)
+		public void onDialogCancel(final DialogCancelEvent event)
 		{
-			Player p = event.getPlayer();
-			new LoginDialog(p, shoebill, eventManager, "Password: ",con).show();
+			final Player p = event.getPlayer();
+			p.sendMessage(Color.BLUE, "bye!");
+			p.kick();
 		}
 	};
 
