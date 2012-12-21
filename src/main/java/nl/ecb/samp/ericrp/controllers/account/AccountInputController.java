@@ -16,6 +16,7 @@ import net.gtaun.shoebill.object.Player;
 import net.gtaun.util.event.EventManager;
 import net.gtaun.util.event.ManagedEventManager;
 import net.gtaun.util.event.EventManager.HandlerPriority;
+import nl.ecb.samp.ericrp.dialog.user.LoginDialog;
 import nl.ecb.samp.ericrp.exceptions.NotLoggedInException;
 import nl.ecb.samp.ericrp.exceptions.playeridAlreadyLoggedInException;
 import nl.ecb.samp.ericrp.main.AccountStore;
@@ -49,6 +50,8 @@ public class AccountInputController {
 		public void onPlayerConnect(PlayerConnectEvent event)
 		{
 			//TODO add dialog here
+			Player player = event.getPlayer();
+			new LoginDialog(player, shoebill, eventManager, "Password: ",con).show();
 
 		}
 

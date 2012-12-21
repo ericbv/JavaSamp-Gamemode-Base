@@ -27,7 +27,7 @@ public class AccountController {
 	 * @throws AccountNotFoundException when no acount is found using the credentials
 	 * @throws playeridAlreadyLoggedInException when the platyer is already logged in
 	 */
-	protected void login(Player p,String username, String password) throws AccountNotFoundException, playeridAlreadyLoggedInException {
+	public void login(Player p,String username, String password) throws AccountNotFoundException, playeridAlreadyLoggedInException {
 		store.setAccount(p, MysqlAdapter.getInstance().getAccount(username,password));
 	}
 	protected void logout(Player p) throws NotLoggedInException {
