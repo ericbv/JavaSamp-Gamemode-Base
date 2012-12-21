@@ -25,13 +25,16 @@ public class AccountController {
 	 * @param username username of the account youre trying to load.
 	 * @param password the password of the account youre trying to load
 	 * @throws AccountNotFoundException when no acount is found using the credentials
-	 * @throws playeridAlreadyLoggedInException when the platyer is already logged in
+	 * @throws playeridAlreadyLoggedInException when the player is already logged in
 	 */
 	public void login(Player p,String username, String password) throws AccountNotFoundException, playeridAlreadyLoggedInException {
 		store.setAccount(p, MysqlAdapter.getInstance().getAccount(username,password));
 	}
-	protected void logout(Player p) throws NotLoggedInException {
+	public void logout(Player p) throws NotLoggedInException {
 		MysqlAdapter.getInstance().saveAccount(store.getAccount(p));
 		store.removeAccount(p);
+	}
+	public void register(Player p,String Email,String username, String password) {
+		
 	}
 }
