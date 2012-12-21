@@ -11,12 +11,13 @@ import net.gtaun.shoebill.object.World;
 import net.gtaun.shoebill.resource.Gamemode;
 import net.gtaun.util.event.EventManager;
 import nl.ecb.samp.ericrp.controllers.account.AccountController;
+import nl.ecb.samp.ericrp.controllers.account.AccountInputController;
 import nl.ecb.samp.ericrp.model.Account;
 import nl.ecb.samp.ericrp.persistance.MysqlAdapter;
 
 public class Main extends Gamemode{
 	private static Logger logger;
-	private static AccountController lc;
+	private static AccountInputController lc;
 	public static Logger logger()
 	{
 		return logger;
@@ -34,7 +35,7 @@ public class Main extends Gamemode{
 		final SampObjectStore store = getShoebill().getSampObjectStore();
 		final SampObjectFactory factory = getShoebill().getSampObjectFactory();
 		final EventManager eventManager = getEventManager();
-		lc = new AccountController(getShoebill(), eventManager);
+		lc = new AccountInputController(getShoebill(), eventManager);
 
 		Server server = store.getServer();
 		World world = store.getWorld();

@@ -38,4 +38,7 @@ public class MysqlAccountCRUD {
 		return acc;
 
 	}
+	public void saveAccount(Account account){
+		
+	}
 }

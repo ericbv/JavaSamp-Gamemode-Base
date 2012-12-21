@@ -16,6 +16,7 @@ import net.gtaun.shoebill.object.Player;
 import net.gtaun.util.event.EventManager;
 import net.gtaun.util.event.ManagedEventManager;
 import net.gtaun.util.event.EventManager.HandlerPriority;
+import nl.ecb.samp.ericrp.exceptions.playeridAlreadyLoggedInException;
 import nl.ecb.samp.ericrp.main.AccountStore;
 
 public class AccountInputController {
@@ -87,6 +88,8 @@ public class AccountInputController {
 					con.login(player,args.poll(),args.poll());
 				} catch (AccountNotFoundException e) {
 					player.sendMessage(Color.RED, "[ERROR]:invalid username or password");
+				} catch (playeridAlreadyLoggedInException e) {
+					player.sendMessage(Color.RED, "[ERROR]:allready logged in");
 				}
 				event.setProcessed();
 				return;

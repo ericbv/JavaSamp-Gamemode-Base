@@ -25,5 +25,8 @@ public class MysqlAdapter {
 		return crudAccount.getAccount(connector.getConnection(), username, password);
 		
 	}
+	public void saveAccount(Account account) {
+		crudAccount.saveAccount(account);
+	}
 
 }
