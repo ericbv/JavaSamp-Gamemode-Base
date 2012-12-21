@@ -16,8 +16,10 @@ import net.gtaun.shoebill.object.Player;
 import net.gtaun.util.event.EventManager;
 import net.gtaun.util.event.ManagedEventManager;
 import net.gtaun.util.event.EventManager.HandlerPriority;
+import nl.ecb.samp.ericrp.exceptions.NotLoggedInException;
 import nl.ecb.samp.ericrp.exceptions.playeridAlreadyLoggedInException;
 import nl.ecb.samp.ericrp.main.AccountStore;
+import nl.ecb.samp.ericrp.main.Main;
 
 public class AccountInputController {
 	private Shoebill shoebill;
@@ -46,16 +48,18 @@ public class AccountInputController {
 		@Override
 		public void onPlayerConnect(PlayerConnectEvent event)
 		{
-			Player p = event.getPlayer();
-			p.sendMessage(Color.PURPLE, "typ /login");
+			//TODO add dialog here
 
 		}
 
 		@Override
 		public void onPlayerDisconnect(PlayerDisconnectEvent event)
 		{
-			Player player = event.getPlayer();
-			store.removeAccount(player);
+			try {
+				con.logout(event.getPlayer());
+			} catch (NotLoggedInException e) {
+				Main.logger().info(event.getPlayer().getName()+" Was not logged in nothing has been saved.");
+			}
 		}
 
 		@Override
