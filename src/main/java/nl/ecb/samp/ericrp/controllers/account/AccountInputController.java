@@ -18,13 +18,13 @@ import net.gtaun.util.event.ManagedEventManager;
 import net.gtaun.util.event.EventManager.HandlerPriority;
 import nl.ecb.samp.ericrp.main.AccountStore;
 
-public class AccountCommandController {
+public class AccountInputController {
 	private Shoebill shoebill;
 	private ManagedEventManager eventManager;
 	private AccountStore store;
 	private AccountController con;
 	
-	public AccountCommandController(Shoebill shoebill, EventManager rootEventManager)
+	public AccountInputController(Shoebill shoebill, EventManager rootEventManager)
 	{
 		this.shoebill = shoebill;
 		this.eventManager = new ManagedEventManager(rootEventManager);
@@ -86,7 +86,7 @@ public class AccountCommandController {
 				try {
 					con.login(player,args.poll(),args.poll());
 				} catch (AccountNotFoundException e) {
-					player.sendMessage(Color.RED, "[ERROR]:invalid username or password")
+					player.sendMessage(Color.RED, "[ERROR]:invalid username or password");
 				}
 				event.setProcessed();
 				return;
