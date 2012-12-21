@@ -17,6 +17,7 @@ import net.gtaun.util.event.EventManager;
 import net.gtaun.util.event.ManagedEventManager;
 import net.gtaun.util.event.EventManager.HandlerPriority;
 import nl.ecb.samp.ericrp.dialog.user.LoginDialog;
+import nl.ecb.samp.ericrp.dialog.user.RegisterPassword;
 import nl.ecb.samp.ericrp.exceptions.NotLoggedInException;
 import nl.ecb.samp.ericrp.exceptions.playeridAlreadyLoggedInException;
 import nl.ecb.samp.ericrp.main.AccountStore;
@@ -27,7 +28,7 @@ public class AccountInputController {
 	private ManagedEventManager eventManager;
 	private AccountStore store;
 	private AccountController con;
-	
+
 	public AccountInputController(Shoebill shoebill, EventManager rootEventManager)
 	{
 		this.shoebill = shoebill;
@@ -43,7 +44,7 @@ public class AccountInputController {
 	{
 		eventManager.cancelAll();
 	}
-	
+
 	private PlayerEventHandler playerEventHandler = new PlayerEventHandler()
 	{
 		@Override
@@ -51,7 +52,11 @@ public class AccountInputController {
 		{
 			//TODO add dialog here
 			Player player = event.getPlayer();
-			new LoginDialog(player, shoebill, eventManager, "Password: ",con).show();
+			if(con.isRegisterdMember(player)){
+				new LoginDialog(player, shoebill, eventManager, "Password: ",con).show();
+			}else{
+				new RegisterPassword(player, shoebill, eventManager, "Welcome please enter your desired password:", con).show();
+			}
 
 		}
 
@@ -68,39 +73,7 @@ public class AccountInputController {
 		@Override
 		public void onPlayerCommand(PlayerCommandEvent event)
 		{
-			Player player = event.getPlayer();
-
-			String command = event.getCommand();
-			String[] splits = command.split(" ", 2);
-
-			String operation = splits[0].toLowerCase();
-			Queue<String> args = new LinkedList<String>();
-
-			if (splits.length > 1)
-			{
-				String[] argsArray = splits[1].split(" ");
-				args.addAll(Arrays.asList(argsArray));
-			}
-
-			switch (operation)
-			{
-			case "/login":
-				if (args.size() < 2)
-				{
-					player.sendMessage(Color.WHITE, "Usage: /login [username] [password]");
-					event.setProcessed();
-					return;
-				}
-				try {
-					con.login(player,args.poll(),args.poll());
-				} catch (AccountNotFoundException e) {
-					player.sendMessage(Color.RED, "[ERROR]:invalid username or password");
-				} catch (playeridAlreadyLoggedInException e) {
-					player.sendMessage(Color.RED, "[ERROR]:allready logged in");
-				}
-				event.setProcessed();
-				return;
-			}
+			
 		}
 	};
 }

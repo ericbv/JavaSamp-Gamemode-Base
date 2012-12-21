@@ -1,7 +1,5 @@
 package nl.ecb.samp.ericrp.dialog.user;
 
-import javax.security.auth.login.AccountNotFoundException;
-
 import net.gtaun.shoebill.Shoebill;
 import net.gtaun.shoebill.data.Color;
 import net.gtaun.shoebill.event.DialogEventHandler;
@@ -12,25 +10,24 @@ import net.gtaun.util.event.EventManager;
 import net.gtaun.util.event.ManagedEventManager;
 import net.gtaun.util.event.EventManager.HandlerPriority;
 import nl.ecb.samp.ericrp.controllers.account.AccountController;
-import nl.ecb.samp.ericrp.dialog.AbstractPasswordDialog;
-import nl.ecb.samp.ericrp.exceptions.playeridAlreadyLoggedInException;
+import nl.ecb.samp.ericrp.dialog.AbstractInputDialog;
 
+public class RegisterPassword extends AbstractInputDialog{
 
-public class LoginDialog extends AbstractPasswordDialog {
 	private EventManager eventManager;
 	private AccountController con;
-	public LoginDialog(Player player,  Shoebill shoebill,
-			EventManager rootEventManager, String info, AccountController con) {
+	public RegisterPassword(Player player,
+			Shoebill shoebill, EventManager rootEventManager, String info, AccountController con) {
 		super(player, shoebill, rootEventManager, info);
 		this.con = con;
 		this.eventManager = new ManagedEventManager(rootEventManager);
 		eventManager.registerHandler(DialogResponseEvent.class, super.getDialog(), dialogEventHandler, HandlerPriority.NORMAL);
 		eventManager.registerHandler(DialogCancelEvent.class, super.getDialog(), dialogEventHandler, HandlerPriority.NORMAL);
 	}
-
 	@Override
 	public void show(){
-		this.setCaption("Login");
+		this.setCaption("Register dialog [1/2]");
+		this.setButtonOk("Register");
 		this.setButtonCancel("Quit");
 		super.show();
 	}
@@ -38,29 +35,24 @@ public class LoginDialog extends AbstractPasswordDialog {
 	{
 		public void onDialogResponse(DialogResponseEvent event)
 		{	
-			if(event.getDialogResponse() ==1)
-			{
-
-				System.out.println("blaat1");
-				final Player p = event.getPlayer();
-				try {
-					con.login(p, p.getName(), event.getInputText());
-				} catch (final AccountNotFoundException e) {
-					new LoginDialog(player, shoebill, eventManager, "Wrond password please try again \nPassword: ",con).show();
-				} catch (final playeridAlreadyLoggedInException e) {
-					p.sendMessage(Color.RED, "ERROR: you are already logged in");
-				}
-				event.setProcessed();
+			if(event.getDialogResponse() == 1){
+			System.out.println("nomnom1");
+			final Player p = event.getPlayer();
+			if(event.getInputText().length() < 1){
+				new RegisterPassword(player,shoebill, rootEventManager, "ERROR: Please enter a valid password:", con).show();
 			}else{
-				System.out.println("blaat2");
-				final Player p = event.getPlayer();
-				p.sendMessage(Color.BLUE, "bye!");
+				new RegisterEmail(player,shoebill, rootEventManager, "please enter your Email:", con, event.getInputText()).show();
+			}
+			event.setProcessed();
+			}else{
+				System.out.println("nomnom2");
+				Player p = event.getPlayer();
+				p.sendMessage(Color.BLUE, "Bye!");
 				p.kick();
 				event.setProcessed();
 			}
 		}
+
 	};
-
-
 
 }
