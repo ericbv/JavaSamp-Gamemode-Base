@@ -4,6 +4,7 @@ import javax.security.auth.login.AccountNotFoundException;
 
 
 import net.gtaun.shoebill.object.Player;
+import nl.ecb.samp.ericrp.exceptions.AccountAlreadyCreatedException;
 import nl.ecb.samp.ericrp.exceptions.NotLoggedInException;
 import nl.ecb.samp.ericrp.exceptions.playeridAlreadyLoggedInException;
 import nl.ecb.samp.ericrp.main.AccountStore;
@@ -34,7 +35,12 @@ public class AccountController {
 		MysqlAdapter.getInstance().saveAccount(store.getAccount(p));
 		store.removeAccount(p);
 	}
-	public void register(Player p,String Email,String username, String password) {
-		
+	public void register(Player p,String Email,String username, String password) throws AccountAlreadyCreatedException {
+		MysqlAdapter.getInstance().createAccount(username, password, Email)	;
+		}
+	public boolean isRegisterdMember(Player p){
+		return false;
+		//TODO Add implementation
+
 	}
 }

@@ -1,7 +1,10 @@
 package nl.ecb.samp.ericrp.persistance;
 
+import java.sql.Connection;
+
 import javax.security.auth.login.AccountNotFoundException;
 
+import nl.ecb.samp.ericrp.exceptions.AccountAlreadyCreatedException;
 import nl.ecb.samp.ericrp.model.Account;
 import nl.ecb.samp.ericrp.persistance.mysql.MysqlAccountCRUD;
 import nl.ecb.samp.ericrp.persistance.mysql.MysqlConnector;
@@ -28,5 +31,7 @@ public class MysqlAdapter {
 	public void saveAccount(Account account) {
 		crudAccount.saveAccount(account);
 	}
-
+	public void createAccount(String username,String password,String email) throws AccountAlreadyCreatedException{
+		crudAccount.createAccount(connector.getConnection(), username,password,email);
+	}
 }
