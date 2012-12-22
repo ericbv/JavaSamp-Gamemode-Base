@@ -14,23 +14,23 @@ import net.gtaun.util.event.EventManager.HandlerPriority;
 import nl.ecb.samp.ericrp.controllers.account.AccountController;
 import nl.ecb.samp.ericrp.dialog.AbstractInputDialog;
 import nl.ecb.samp.ericrp.exceptions.AccountAlreadyCreatedException;
+import nl.ecb.samp.ericrp.exceptions.NotLoggedInException;
 import nl.ecb.samp.ericrp.exceptions.playeridAlreadyLoggedInException;
+import nl.ecb.samp.ericrp.main.AccountStore;
+import nl.ecb.samp.ericrp.main.Main;
 
-public class RegisterEmail extends AbstractInputDialog {
-	private EventManager eventManager;
+public class ChangeEmailDialog extends AbstractInputDialog {
+
 	private AccountController con;
-	private String password;
-	public RegisterEmail(Player player,
-			Shoebill shoebill, EventManager rootEventManager,
-			String info, AccountController con,String password) {
+	private ManagedEventManager eventManager;
+	public ChangeEmailDialog(Player player, Shoebill shoebill,
+			EventManager rootEventManager, String info,AccountController con) {
 		super(player, shoebill, rootEventManager, info);
 		this.con = con;
 		this.eventManager = new ManagedEventManager(rootEventManager);
-		this.password = password;
 		eventManager.registerHandler(DialogResponseEvent.class, super.getDialog(), dialogEventHandler, HandlerPriority.NORMAL);
 		eventManager.registerHandler(DialogCancelEvent.class, super.getDialog(), dialogEventHandler, HandlerPriority.NORMAL);
 	}
-	@Override
 	public void show(){
 		this.setCaption("Register dialog [2/2]");
 		this.setButtonOk("Register");
@@ -44,18 +44,12 @@ public class RegisterEmail extends AbstractInputDialog {
 			if(event.getDialogResponse() == 1){
 				Player p = event.getPlayer();
 				if(event.getInputText().length() < 1){//TODO add serious requirements
-					new RegisterEmail(player,shoebill, rootEventManager, "ERROR: Please enter a valid email adres:", con, password).show();
+					new ChangeEmailDialog(player,shoebill, rootEventManager, "ERROR: Please enter a valid email adres:", con).show();
 				}else{
 					try {
-						con.register(p, event.getInputText(), p.getName(), password);
-						con.login(p, p.getName(), password);
-					} catch (AccountAlreadyCreatedException e1) {
-						p.sendMessage(Color.RED, "INTERNAL SERVER ERROR RECONNECT!!");
-						p.kick();
-					}catch (AccountNotFoundException e ) {
-						new LoginDialog(p, shoebill, eventManager, password, con).show();
-					} catch (playeridAlreadyLoggedInException e) {
-						//do nothing thing sort themselfs out here
+						AccountStore.getInstance().getAccount(p).setEmail(event.getInputText());
+					} catch (NotLoggedInException e) {
+						Main.logger().error(p.getName()+" Tried to change email without being logged in");
 					}
 				}
 				event.setProcessed();

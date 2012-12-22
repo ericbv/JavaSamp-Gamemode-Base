@@ -4,6 +4,7 @@ import java.sql.Connection;
 
 import javax.security.auth.login.AccountNotFoundException;
 
+import net.gtaun.shoebill.object.Player;
 import nl.ecb.samp.ericrp.exceptions.AccountAlreadyCreatedException;
 import nl.ecb.samp.ericrp.model.Account;
 import nl.ecb.samp.ericrp.persistance.mysql.MysqlAccountCRUD;
@@ -29,9 +30,12 @@ public class MysqlAdapter {
 		
 	}
 	public void saveAccount(Account account) {
-		crudAccount.saveAccount(account);
+		crudAccount.saveAccount(connector.getConnection(), account);
 	}
 	public void createAccount(String username,String password,String email) throws AccountAlreadyCreatedException{
 		crudAccount.createAccount(connector.getConnection(), username,password,email);
+	}
+	public boolean isAccount(Player p){
+		return crudAccount.isAccount(connector.getConnection(), p);
 	}
 }

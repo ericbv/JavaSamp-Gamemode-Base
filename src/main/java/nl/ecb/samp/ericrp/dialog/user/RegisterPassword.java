@@ -36,16 +36,14 @@ public class RegisterPassword extends AbstractInputDialog{
 		public void onDialogResponse(DialogResponseEvent event)
 		{	
 			if(event.getDialogResponse() == 1){
-			System.out.println("nomnom1");
 			final Player p = event.getPlayer();
-			if(event.getInputText().length() < 1){
+			if(event.getInputText().length() < 1){//TODO add serious requirements
 				new RegisterPassword(player,shoebill, rootEventManager, "ERROR: Please enter a valid password:", con).show();
 			}else{
 				new RegisterEmail(player,shoebill, rootEventManager, "please enter your Email:", con, event.getInputText()).show();
 			}
 			event.setProcessed();
 			}else{
-				System.out.println("nomnom2");
 				Player p = event.getPlayer();
 				p.sendMessage(Color.BLUE, "Bye!");
 				p.kick();

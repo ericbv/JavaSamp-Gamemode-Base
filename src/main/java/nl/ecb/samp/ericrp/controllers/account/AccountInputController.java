@@ -16,6 +16,7 @@ import net.gtaun.shoebill.object.Player;
 import net.gtaun.util.event.EventManager;
 import net.gtaun.util.event.ManagedEventManager;
 import net.gtaun.util.event.EventManager.HandlerPriority;
+import nl.ecb.samp.ericrp.dialog.user.AccountManagerDialog;
 import nl.ecb.samp.ericrp.dialog.user.LoginDialog;
 import nl.ecb.samp.ericrp.dialog.user.RegisterPassword;
 import nl.ecb.samp.ericrp.exceptions.NotLoggedInException;
@@ -73,7 +74,27 @@ public class AccountInputController {
 		@Override
 		public void onPlayerCommand(PlayerCommandEvent event)
 		{
-			
+			Player player = event.getPlayer();
+
+			String command = event.getCommand();
+			String[] splits = command.split(" ", 2);
+
+			String operation = splits[0].toLowerCase();
+			Queue<String> args = new LinkedList<>();
+
+			if (splits.length > 1)
+			{
+				String[] argsArray = splits[1].split(" ");
+				args.addAll(Arrays.asList(argsArray));
+			}
+
+			switch (operation)
+			{
+			case "/account":
+				new AccountManagerDialog(player, shoebill, eventManager,con).show();
+				event.setProcessed();
+				return;
+			}
 		}
 	};
 }

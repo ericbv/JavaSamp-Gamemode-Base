@@ -7,7 +7,9 @@ import java.sql.Statement;
 
 import javax.security.auth.login.AccountNotFoundException;
 
+import net.gtaun.shoebill.object.Player;
 import nl.ecb.samp.ericrp.exceptions.AccountAlreadyCreatedException;
+import nl.ecb.samp.ericrp.main.Main;
 import nl.ecb.samp.ericrp.model.Account;
 
 public class MysqlAccountCRUD {
@@ -28,10 +30,7 @@ public class MysqlAccountCRUD {
 
 		}
 		catch (SQLException ex){
-			// handle any errors
-			System.out.println("SQLException: " + ex.getMessage());
-			System.out.println("SQLState: " + ex.getSQLState());
-			System.out.println("VendorError: " + ex.getErrorCode());
+			proccesMysqlError(ex);
 		}
 		long endTime = System.currentTimeMillis();
 		long duration = endTime - startTime;
@@ -39,28 +38,20 @@ public class MysqlAccountCRUD {
 		return acc;
 
 	}
-	public void saveAccount(Account account){
-		/*//TODO implement
+	public void saveAccount(Connection connection, Account account){
 		long startTime = System.currentTimeMillis();
-		Account acc = null;
 		try {
 			Statement statement = connection.createStatement();
-			ResultSet resultSet = statement.executeQuery(" INSERT INTO accounts (Username, Password) VALUES ('"+account+"', value2, value3,...)" );
-
+			statement.execute(" UPDATE accounts SET Username='"+account.getUsername()+"', Password='"+account.getPassword()+"', Email='"+account.getEmail()+"' WHERE AcountID="+account.getID()+"");
 		}
 		catch (SQLException ex){
-			// handle any errors
-			System.out.println("SQLException: " + ex.getMessage());
-			System.out.println("SQLState: " + ex.getSQLState());
-			System.out.println("VendorError: " + ex.getErrorCode());
+			proccesMysqlError(ex);
 		}
 		long endTime = System.currentTimeMillis();
 		long duration = endTime - startTime;
 		System.out.println("time: "+duration);
-		return acc;*/
 	}
 	public void createAccount(Connection connection, String username,String password,String email) throws AccountAlreadyCreatedException{
-		//TODO implement
 		long startTime = System.currentTimeMillis();
 		try {
 			Statement statement = connection.createStatement();
@@ -72,14 +63,38 @@ public class MysqlAccountCRUD {
 			if(ex.getErrorCode() == 1062){
 				throw new AccountAlreadyCreatedException();
 			}else{
-				// handle any errors
-				System.out.println("SQLException: " + ex.getMessage());
-				System.out.println("SQLState: " + ex.getSQLState());
-				System.out.println("VendorError: " + ex.getErrorCode());
+				proccesMysqlError(ex);
 			}
 		}
 		long endTime = System.currentTimeMillis();
 		long duration = endTime - startTime;
 		System.out.println("time: "+duration);
+	}
+	public boolean isAccount(Connection connection, Player p) {
+		long startTime = System.currentTimeMillis();
+		try {
+			Statement statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery("SELECT * FROM accounts WHERE Username='"+p.getName()+"'");
+			if(!resultSet.next()){
+				return false;
+			}
+			else{
+				return true;
+			}
+
+		}
+		catch (SQLException ex){
+			proccesMysqlError(ex);
+		}
+		long endTime = System.currentTimeMillis();
+		long duration = endTime - startTime;
+		System.out.println("time: "+duration);
+		Main.logger().error("ERROR 001 accountcrud");
+		return false;
+	}
+	private void proccesMysqlError(SQLException ex){
+		Main.logger().error("SQLException: " + ex.getMessage());
+		Main.logger().error("SQLState: " + ex.getSQLState());
+		Main.logger().error("VendorError: " + ex.getErrorCode());
 	}
 }
