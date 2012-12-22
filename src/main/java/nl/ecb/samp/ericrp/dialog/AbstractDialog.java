@@ -39,8 +39,8 @@ public abstract class AbstractDialog
 		SampObjectFactory factory = shoebill.getSampObjectFactory();
 		dialog = factory.createDialog();
 
-		//eventManager.registerHandler(DialogResponseEvent.class, dialog, dialogEventHandler, HandlerPriority.NORMAL);
-		//eventManager.registerHandler(DialogCancelEvent.class, dialog, dialogEventHandler, HandlerPriority.NORMAL);
+		eventManager.registerHandler(DialogResponseEvent.class, dialog, dialogEventHandler, HandlerPriority.NORMAL);
+		eventManager.registerHandler(DialogCancelEvent.class, dialog, dialogEventHandler, HandlerPriority.NORMAL);
 	}
 
 	@Override

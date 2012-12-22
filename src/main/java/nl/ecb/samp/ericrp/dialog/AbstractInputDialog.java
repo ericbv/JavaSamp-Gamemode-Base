@@ -7,7 +7,7 @@ import net.gtaun.shoebill.object.Player;
 import net.gtaun.util.event.EventManager;
 
 
-public class AbstractInputDialog extends AbstractDialog {
+public abstract class AbstractInputDialog extends AbstractDialog {
 private String info;
 	public AbstractInputDialog(Player player,
 			Shoebill shoebill, EventManager rootEventManager, String info) {

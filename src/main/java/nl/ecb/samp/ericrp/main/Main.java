@@ -36,16 +36,10 @@ public class Main extends Gamemode{
 		final SampObjectFactory factory = getShoebill().getSampObjectFactory();
 		final EventManager eventManager = getEventManager();
 		lc = new AccountInputController(getShoebill(), eventManager);
-
 		Server server = store.getServer();
 		World world = store.getWorld();
-		logger.info("Done.");
-		Account a = MysqlAdapter.getInstance().getAccount("Ericbv","lol123");
-		System.out.println("Username: "+a.getUsername());
-		System.out.println("Password: "+a.getPassword());
-		System.out.println("Email: "+a.getEmail());
-		System.out.println("ID: "+a.getID());
 		world.addPlayerClass(3,(float)1958.3783,(float)1343.1572,(float)15.3746,(float)270.1425,0,0,24,300,-1,-1);
+		logger.info("Done.");
 	}
 
 }

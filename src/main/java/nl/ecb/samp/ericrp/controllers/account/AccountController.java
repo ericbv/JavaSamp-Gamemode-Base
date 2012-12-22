@@ -39,8 +39,6 @@ public class AccountController {
 		MysqlAdapter.getInstance().createAccount(username, password, Email)	;
 		}
 	public boolean isRegisterdMember(Player p){
-		return false;
-		//TODO Add implementation
-
+		return MysqlAdapter.getInstance().isAccount(p);
 	}
 }

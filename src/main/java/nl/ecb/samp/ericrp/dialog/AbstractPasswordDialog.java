@@ -5,7 +5,7 @@ import net.gtaun.shoebill.constant.DialogStyle;
 import net.gtaun.shoebill.object.Player;
 import net.gtaun.util.event.EventManager;
 
-public class AbstractPasswordDialog extends AbstractDialog {
+public abstract class AbstractPasswordDialog extends AbstractDialog {
 
 	private String info;
 	public AbstractPasswordDialog(Player player,
