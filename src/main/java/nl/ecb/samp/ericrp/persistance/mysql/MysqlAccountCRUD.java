@@ -14,7 +14,6 @@ import nl.ecb.samp.ericrp.model.Account;
 
 public class MysqlAccountCRUD {
 	public Account getAccount(Connection connection, String username, String password) throws AccountNotFoundException{
-		long startTime = System.currentTimeMillis();
 		Account acc = null;
 		try {
 			Statement statement = connection.createStatement();
@@ -32,14 +31,10 @@ public class MysqlAccountCRUD {
 		catch (SQLException ex){
 			proccesMysqlError(ex);
 		}
-		long endTime = System.currentTimeMillis();
-		long duration = endTime - startTime;
-		System.out.println("time: "+duration);
 		return acc;
 
 	}
 	public void saveAccount(Connection connection, Account account){
-		long startTime = System.currentTimeMillis();
 		try {
 			Statement statement = connection.createStatement();
 			statement.execute(" UPDATE accounts SET Username='"+account.getUsername()+"', Password='"+account.getPassword()+"', Email='"+account.getEmail()+"' WHERE AcountID="+account.getID()+"");
@@ -47,12 +42,8 @@ public class MysqlAccountCRUD {
 		catch (SQLException ex){
 			proccesMysqlError(ex);
 		}
-		long endTime = System.currentTimeMillis();
-		long duration = endTime - startTime;
-		System.out.println("time: "+duration);
 	}
 	public void createAccount(Connection connection, String username,String password,String email) throws AccountAlreadyCreatedException{
-		long startTime = System.currentTimeMillis();
 		try {
 			Statement statement = connection.createStatement();
 			statement.execute(" INSERT INTO accounts (Username, Password,Email) VALUES ('"+username+"', '"+password+"', '"+email+ " ')" );
@@ -66,12 +57,8 @@ public class MysqlAccountCRUD {
 				proccesMysqlError(ex);
 			}
 		}
-		long endTime = System.currentTimeMillis();
-		long duration = endTime - startTime;
-		System.out.println("time: "+duration);
 	}
 	public boolean isAccount(Connection connection, Player p) {
-		long startTime = System.currentTimeMillis();
 		try {
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery("SELECT * FROM accounts WHERE Username='"+p.getName()+"'");
@@ -86,9 +73,6 @@ public class MysqlAccountCRUD {
 		catch (SQLException ex){
 			proccesMysqlError(ex);
 		}
-		long endTime = System.currentTimeMillis();
-		long duration = endTime - startTime;
-		System.out.println("time: "+duration);
 		Main.logger().error("ERROR 001 accountcrud");
 		return false;
 	}
