@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.security.auth.login.AccountNotFoundException;
 
@@ -21,7 +23,8 @@ public class MysqlAccountCRUD {
 			if(resultSet.next()){
 				String email = resultSet.getString(4);
 				int iD = resultSet.getInt(1);
-				acc = Account.load(username, password, email, iD);
+				List<Character> characters = new ArrayList<Character>();
+				acc = Account.load(username, password, email, iD, characters);
 			}
 			else{
 				throw new AccountNotFoundException();
