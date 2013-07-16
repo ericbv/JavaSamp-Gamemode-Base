@@ -1,7 +1,7 @@
 class: nl.ecb.samp.ericrp.main.Main
-name: Ventura's DM~MG (Shoebill Milestone2 Example)
+name: ERICRP
 version: 0.1.0-SNAPSHOT
 buildNumber: ${build.number}
 buildDate: Unknown
-authors: JoJLlmAn, MK124
+authors: joh999
 description: 
