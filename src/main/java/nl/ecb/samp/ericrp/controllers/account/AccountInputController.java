@@ -4,10 +4,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import javax.security.auth.login.AccountNotFoundException;
-
 import net.gtaun.shoebill.Shoebill;
-import net.gtaun.shoebill.data.Color;
 import net.gtaun.shoebill.event.PlayerEventHandler;
 import net.gtaun.shoebill.event.player.PlayerCommandEvent;
 import net.gtaun.shoebill.event.player.PlayerConnectEvent;
@@ -20,7 +17,6 @@ import nl.ecb.samp.ericrp.dialog.user.AccountManagerDialog;
 import nl.ecb.samp.ericrp.dialog.user.LoginDialog;
 import nl.ecb.samp.ericrp.dialog.user.RegisterPassword;
 import nl.ecb.samp.ericrp.exceptions.NotLoggedInException;
-import nl.ecb.samp.ericrp.exceptions.playeridAlreadyLoggedInException;
 import nl.ecb.samp.ericrp.main.AccountStore;
 import nl.ecb.samp.ericrp.main.Main;
 

@@ -25,6 +25,7 @@ public class MysqlAccountCRUD {
 				int iD = resultSet.getInt(1);
 				List<Character> characters = new ArrayList<Character>();
 				acc = Account.load(username, password, email, iD, characters);
+
 			}
 			else{
 				throw new AccountNotFoundException();

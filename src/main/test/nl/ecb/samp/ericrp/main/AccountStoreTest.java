@@ -24,6 +24,7 @@ public class AccountStoreTest {
 	public void testIsLoggedIn() throws playeridAlreadyLoggedInException {
 		AccountStore accs = AccountStore.getInstance();
 		Account a = Account.load("ericbv", "lol123", "e.bonestroo@gmail.com", 3,null);
+
 		p = mock(Player.class);
 		assertEquals(false,accs.isLoggedIn(p));
 		accs.setAccount(p, a);
