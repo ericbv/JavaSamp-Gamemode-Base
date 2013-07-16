@@ -1,17 +1,19 @@
 package nl.ecb.samp.ericrp.model;
 
+import java.util.Date;
+
 public class Character {
 
 	private String CharacterName;
 	private int ModelID;
-	private String Birthdate;
-	public Character(String characterName, int modelID, String birthdate) {
+	private Date Birthdate;
+	public Character(String characterName, int modelID, Date birthdate) {
 		super();
 		CharacterName = characterName;
 		ModelID = modelID;
 		Birthdate = birthdate;
 	}
-	public static Character load(String characterName, int modelID, String birthdate){
+	public static Character load(String characterName, int modelID, Date birthdate){
 		return new Character(characterName, modelID, birthdate);
 	}
 	public String getCharacterName() {
@@ -26,10 +28,10 @@ public class Character {
 	public void setModelID(int modelID) {
 		ModelID = modelID;
 	}
-	public String getBirthdate() {
+	public Date getBirthdate() {
 		return Birthdate;
 	}
-	public void setBirthdate(String birthdate) {
+	public void setBirthdate(Date birthdate) {
 		Birthdate = birthdate;
 	}
 

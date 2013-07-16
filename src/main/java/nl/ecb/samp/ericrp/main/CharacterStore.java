@@ -29,7 +29,7 @@ public class CharacterStore {
 		}
 	}
 
-	public Character getAccount(Player p) throws NoCharacterSelectedException{
+	public Character getCharacter(Player p) throws NoCharacterSelectedException{
 		if(!isOnCharacter(p)){
 			throw new NoCharacterSelectedException();
 		}
@@ -37,13 +37,13 @@ public class CharacterStore {
 		
 
 	}
-	public void setAccount(Player p, Character character) throws playerAlreadyOnCharacterException{
+	public void setCharacter(Player p, Character character) throws playerAlreadyOnCharacterException{
 		if(!!isOnCharacter(p) == false){
 			throw new playerAlreadyOnCharacterException();
 		}
 		characterList.put(p, character);
 	}
-	public void removeAccount(Player p){
+	public void removeCharacter(Player p){
 		characterList.remove(p);
 	}
 }
