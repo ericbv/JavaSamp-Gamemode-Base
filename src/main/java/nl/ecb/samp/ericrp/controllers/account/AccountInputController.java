@@ -51,7 +51,6 @@ public class AccountInputController {
 		@Override
 		public void onPlayerConnect(PlayerConnectEvent event)
 		{
-			//TODO add dialog here
 			Player player = event.getPlayer();
 			if(con.isRegisterdMember(player)){
 				new LoginDialog(player, shoebill, eventManager, "Password: ",con).show();
