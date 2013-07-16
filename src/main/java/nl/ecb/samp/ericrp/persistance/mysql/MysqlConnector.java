@@ -14,8 +14,7 @@ public class MysqlConnector {
 	public Connection getConnection(){
 		Connection conn = null;
 		try {
-			conn =
-					DriverManager.getConnection("jdbc:mysql://localhost:3306/JavaSamp?user=root");
+			conn = DriverManager.getConnection ("jdbc:mysql://localhost:3306/JavaSamp", "root", "a");
 
 		} catch (SQLException ex) {
 			// handle any errors
@@ -29,7 +28,7 @@ public class MysqlConnector {
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
 			} catch (ClassNotFoundException e) {
-				Main.logger().error("nom",e);
+				Main.logger().error("JDBC DRIVER ERROR",e);
 			}
 	}
 
