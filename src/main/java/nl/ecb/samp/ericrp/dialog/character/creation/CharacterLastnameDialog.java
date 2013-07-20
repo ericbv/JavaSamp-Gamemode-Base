@@ -18,34 +18,55 @@ public class CharacterLastnameDialog extends AbstractInputDialog {
 	private ManagedEventManager eventManager;
 
 	public CharacterLastnameDialog(Player player, Shoebill shoebill,
-			EventManager rootEventManager, String info, CharacterCreationManager characterCreationManager) {
+			EventManager rootEventManager, String info,
+			CharacterCreationManager characterCreationManager) {
 		super(player, shoebill, rootEventManager, info);
 		this.p = player;
-		this.characterCreationManager=characterCreationManager;
+		this.characterCreationManager = characterCreationManager;
 		this.eventManager = new ManagedEventManager(rootEventManager);
-		eventManager.registerHandler(DialogResponseEvent.class, super.getDialog(), dialogEventHandler, HandlerPriority.NORMAL);
+		eventManager.registerHandler(DialogResponseEvent.class,
+				super.getDialog(), dialogEventHandler, HandlerPriority.NORMAL);
 	}
-	private DialogEventHandler dialogEventHandler = new DialogEventHandler()
-	{
-		public void onDialogResponse(DialogResponseEvent event)
-		{	
-			if(event.getDialogResponse() == 1){
+
+	public void show() {
+		this.setButtonOk("Next");
+		this.setButtonCancel("Back");
+		super.show();
+	}
+
+	private DialogEventHandler dialogEventHandler = new DialogEventHandler() {
+		public void onDialogResponse(DialogResponseEvent event) {
+			if (event.getDialogResponse() == 1) {
 				Player p = event.getPlayer();
 				try {
-					characterCreationManager.RecieveLastname(event.getInputText());
+					characterCreationManager.RecieveLastname(event
+							.getInputText());
 				} catch (NoInputException e) {
-					new CharacterLastnameDialog(p, shoebill, rootEventManager,
-							"[ERROR]Please put in a lastname.\nEnter a Proper lastname:", characterCreationManager).show();
+					new CharacterLastnameDialog(
+							p,
+							shoebill,
+							rootEventManager,
+							"[ERROR]Please put in a lastname.\nEnter a Proper lastname:",
+							characterCreationManager).show();
 				} catch (TooShortInputException e) {
-					new CharacterLastnameDialog(p, shoebill, rootEventManager,
-							"[ERROR]That lastname is to short min 4 characters.\nEnter a Proper lastname:", characterCreationManager).show();
+					new CharacterLastnameDialog(
+							p,
+							shoebill,
+							rootEventManager,
+							"[ERROR]That lastname is to short min 4 characters.\nEnter a Proper lastname:",
+							characterCreationManager).show();
 				} catch (TooLongInputException e) {
-					new CharacterLastnameDialog(p, shoebill, rootEventManager,
-							"[ERROR]That lastname is to long max 12 characters.\nEnter a Proper lastname:", characterCreationManager).show();;
+					new CharacterLastnameDialog(
+							p,
+							shoebill,
+							rootEventManager,
+							"[ERROR]That lastname is to long max 12 characters.\nEnter a Proper lastname:",
+							characterCreationManager).show();
+					;
 				}
 				event.setProcessed();
-			}else{
-				//TODO BACK
+			} else {
+				characterCreationManager.goBack(CharacterLastnameDialog.this);
 			}
 
 		}

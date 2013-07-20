@@ -24,6 +24,7 @@ public class CharacterGenderDialog extends AbstractListDialog {
 		this.characterCreationManager=characterCreationManager;
 		setCaption("Choose Gender:");
 	}
+	
 	public void show(){
 		dialogListItems.add(
 				new DialogListItem("Male")
@@ -43,6 +44,7 @@ public class CharacterGenderDialog extends AbstractListDialog {
 					}
 
 				});
+		this.setButtonCancel("Back");
 		super.show();
 	}
 

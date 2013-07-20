@@ -11,11 +11,14 @@ import net.gtaun.shoebill.Shoebill;
 import net.gtaun.shoebill.object.Player;
 import net.gtaun.util.event.EventManager;
 import nl.ecb.samp.ericrp.controllers.character.CharacterController;
+import nl.ecb.samp.ericrp.dialog.AbstractDialog;
+import nl.ecb.samp.ericrp.dialog.AbstractInputDialog;
 import nl.ecb.samp.ericrp.dialog.character.creation.exceptions.InputTooHighException;
 import nl.ecb.samp.ericrp.dialog.character.creation.exceptions.InputTooLowException;
 import nl.ecb.samp.ericrp.dialog.character.creation.exceptions.NoInputException;
 import nl.ecb.samp.ericrp.dialog.character.creation.exceptions.TooLongInputException;
 import nl.ecb.samp.ericrp.dialog.character.creation.exceptions.TooShortInputException;
+import nl.ecb.samp.ericrp.dialog.character.selection.CharacterSelectionDialog;
 import nl.ecb.samp.ericrp.model.Character.*;
 import nl.ecb.samp.ericrp.model.Character;
 
@@ -83,7 +86,7 @@ public class CharacterCreationManager {
 	}
 
 	public void RecieveDay(String day) throws NoInputException,
-			InputTooHighException, InputTooLowException {
+			InputTooHighException, InputTooLowException, NumberFormatException {
 		Integer iDay = Integer.parseInt(day);
 		if (lastName.length() == 0) {
 			throw new NoInputException();
@@ -92,14 +95,15 @@ public class CharacterCreationManager {
 		} else if (iDay > 30) {
 			throw new InputTooHighException();
 		}
-		shoebill.getResourceManager().getGamemode().getLogger().info("Day:"+iDay+"");
+		shoebill.getResourceManager().getGamemode().getLogger()
+				.info("Day:" + iDay + "");
 		this.day = iDay;
 		new CharacterMonthDialog(p, shoebill, rootEventManager,
 				"Please enter the Month[1-12] you were born.", this).show();
 	}
 
 	public void RecieveMonth(String month) throws InputTooLowException,
-			InputTooHighException, NoInputException {
+			InputTooHighException, NoInputException,NumberFormatException {
 		Integer iMonth = Integer.parseInt(month);
 		if (lastName.length() == 0) {
 			throw new NoInputException();
@@ -115,7 +119,7 @@ public class CharacterCreationManager {
 	}
 
 	public void RecieveYear(String year) throws InputTooLowException,
-			InputTooHighException, NoInputException {
+			InputTooHighException, NoInputException,NumberFormatException {
 		try {
 			Integer iYear = Integer.parseInt(year);
 			if (lastName.length() == 0) {
@@ -131,26 +135,28 @@ public class CharacterCreationManager {
 			if (day < 10) {
 				if (month < 10) {
 					c = Character.load(firstName + "_" + lastName,
-							BaseModelID(),
-							df.parse("0" + month + "-0" + day + "-" + this.year),
-							gender);
+							BaseModelID(), df.parse("0" + month + "-0" + day
+									+ "-" + this.year), gender);
 				} else {
 					c = Character.load(firstName + "_" + lastName,
 							BaseModelID(),
-							df.parse(month + "-0" + day + "-" + this.year), gender);
+							df.parse(month + "-0" + day + "-" + this.year),
+							gender);
 				}
 			} else {
 				if (month < 10) {
 
-					c = Character.load(firstName + "_" + lastName,
-							BaseModelID(),
-							df.parse("0" + month + "-" + day + "-" + this.year),
-							gender);
+					c = Character
+							.load(firstName + "_" + lastName,
+									BaseModelID(),
+									df.parse("0" + month + "-" + day + "-"
+											+ this.year), gender);
 
 				} else {
 					c = Character.load(firstName + "_" + lastName,
 							BaseModelID(),
-							df.parse(month + "-" + day + "-" + this.year), gender);
+							df.parse(month + "-" + day + "-" + this.year),
+							gender);
 				}
 			}
 			con.createCharacter(c, p);
@@ -169,5 +175,29 @@ public class CharacterCreationManager {
 			return 12;
 		}
 		return day;
+	}
+
+	public void goBack(AbstractDialog d) {
+		if (d instanceof AbstractInputDialog) {
+			if (d instanceof CharacterFirstnameDialog) {
+				new CharacterSelectionDialog(p, shoebill, rootEventManager, con)
+						.show();
+			} else if (d instanceof CharacterLastnameDialog) {
+				new CharacterFirstnameDialog(p, shoebill, rootEventManager,
+						"Please enter you're desired firstname.", this).show();
+			} else if (d instanceof CharacterDayDialog) {
+				new CharacterGenderDialog(p, shoebill, rootEventManager, this)
+						.show();
+			} else if (d instanceof CharacterMonthDialog) {
+				new CharacterDayDialog(p, shoebill, rootEventManager,
+						"Please enter the day[1-30] you were born.", this).show();
+			} else if (d instanceof CharacterYearDialog) {
+				new CharacterMonthDialog(p, shoebill, rootEventManager,
+						"Please enter the Month[1-12] you were born.", this).show();
+			}
+		} else {// GENDER SELECT
+			new CharacterLastnameDialog(p, shoebill, rootEventManager,
+					"Please enter you're desired lastname.", this).show();
+		}
 	}
 }

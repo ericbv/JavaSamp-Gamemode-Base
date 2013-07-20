@@ -42,6 +42,7 @@ public class CharacterController {
 		try {
 			store.setCharacter(p, c);
 			p.setName(store.getCharacter(p).getCharacterName());
+			p.spawn();
 		} catch (IllegalArgumentException | IllegalLengthException
 				| AlreadyExistException | NoCharacterSelectedException e) {
 			e.printStackTrace();
@@ -67,7 +68,7 @@ public class CharacterController {
 	}
 
 	public void deleteCharacter() {
-
+		//TODO IMPLEMENT
 	}
 
 	public void SpawnCharacter(Player player) throws NoCharacterSelectedException {
