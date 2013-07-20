@@ -9,6 +9,7 @@ import net.gtaun.shoebill.event.PlayerEventHandler;
 import net.gtaun.shoebill.event.player.PlayerCommandEvent;
 import net.gtaun.shoebill.event.player.PlayerConnectEvent;
 import net.gtaun.shoebill.event.player.PlayerDisconnectEvent;
+import net.gtaun.shoebill.event.player.PlayerSpawnEvent;
 import net.gtaun.shoebill.object.Player;
 import net.gtaun.util.event.EventManager;
 import net.gtaun.util.event.ManagedEventManager;
@@ -19,6 +20,7 @@ import nl.ecb.samp.ericrp.dialog.user.LoginDialog;
 import nl.ecb.samp.ericrp.dialog.user.RegisterPassword;
 import nl.ecb.samp.ericrp.events.PlayerLoginEvent;
 import nl.ecb.samp.ericrp.events.handler.AccountEventHandler;
+import nl.ecb.samp.ericrp.exceptions.NoCharacterSelectedException;
 import nl.ecb.samp.ericrp.exceptions.NotLoggedInException;
 import nl.ecb.samp.ericrp.main.AccountStore;
 import nl.ecb.samp.ericrp.main.Main;
@@ -36,6 +38,7 @@ public class CharacterInputController {
 		this.store = AccountStore.getInstance();
 		this.con = new CharacterController(shoebill,rootEventManager);
 		eventManager.registerHandler(PlayerLoginEvent.class, accountEventHandler, HandlerPriority.NORMAL);
+		eventManager.registerHandler(PlayerSpawnEvent.class, playerEventHandler, HandlerPriority.NORMAL);
 	
 	}
 
@@ -50,6 +53,20 @@ public class CharacterInputController {
 		{
 			Player player = event.getPlayer();
 			new CharacterSelectionDialog(player, shoebill, eventManager, con).show();
+		}
+	
+	};
+	
+	private PlayerEventHandler playerEventHandler = new PlayerEventHandler()
+	{
+		public void onPlayerSpawn(PlayerSpawnEvent event)
+		{
+			Player player = event.getPlayer();
+			try {
+				con.SpawnCharacter(player);
+			} catch (NoCharacterSelectedException e) {
+				new CharacterSelectionDialog(player, shoebill, eventManager, con).show();
+			}
 		}
 	
 	};

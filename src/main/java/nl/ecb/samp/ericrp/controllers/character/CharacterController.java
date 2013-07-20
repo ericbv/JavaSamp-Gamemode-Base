@@ -1,5 +1,7 @@
 package nl.ecb.samp.ericrp.controllers.character;
 
+import java.util.List;
+
 import net.gtaun.shoebill.Shoebill;
 import net.gtaun.shoebill.exception.AlreadyExistException;
 import net.gtaun.shoebill.exception.IllegalLengthException;
@@ -8,9 +10,12 @@ import net.gtaun.util.event.EventManager;
 import net.gtaun.util.event.ManagedEventManager;
 import nl.ecb.samp.ericrp.dialog.character.selection.CharacterSelectionDialog;
 import nl.ecb.samp.ericrp.exceptions.NoCharacterSelectedException;
+import nl.ecb.samp.ericrp.exceptions.NotLoggedInException;
 import nl.ecb.samp.ericrp.exceptions.playerAlreadyOnCharacterException;
 
+import nl.ecb.samp.ericrp.main.AccountStore;
 import nl.ecb.samp.ericrp.main.CharacterStore;
+import nl.ecb.samp.ericrp.model.Account;
 import nl.ecb.samp.ericrp.model.Character;
 
 public class CharacterController {
@@ -46,5 +51,27 @@ public class CharacterController {
 	public void unLoadChar(Player p) {
 		store.removeCharacter(p);
 		new CharacterSelectionDialog(p, shoebill, eventManager, this).show();
+	}
+
+	public void createCharacter(Character c, Player p) {
+		Account a;
+		try {
+			a = AccountStore.getInstance().getAccount(p);
+			List<Character> characters = a.getCharacters();
+			characters.add(c);
+			a.setCharacters(characters);
+		} catch (NotLoggedInException e) {
+			e.printStackTrace();
+		}
+		new CharacterSelectionDialog(p, shoebill, eventManager, this).show();
+	}
+
+	public void deleteCharacter() {
+
+	}
+
+	public void SpawnCharacter(Player player) throws NoCharacterSelectedException {
+		player.setSkin(store.getCharacter(player).getModelID());
+		
 	}
 }
