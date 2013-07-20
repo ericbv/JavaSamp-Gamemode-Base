@@ -1,5 +1,7 @@
 package nl.ecb.samp.ericrp.dialog.character.selection;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 
@@ -9,6 +11,7 @@ import net.gtaun.util.event.EventManager;
 import nl.ecb.samp.ericrp.controllers.character.CharacterController;
 import nl.ecb.samp.ericrp.dialog.AbstractListDialog;
 import nl.ecb.samp.ericrp.dialog.AbstractListDialog.DialogListItem;
+import nl.ecb.samp.ericrp.dialog.character.creation.CharacterCreationManager;
 import nl.ecb.samp.ericrp.dialog.user.ChangePassword;
 import nl.ecb.samp.ericrp.exceptions.NotLoggedInException;
 import nl.ecb.samp.ericrp.exceptions.playerAlreadyOnCharacterException;
@@ -25,14 +28,15 @@ private CharacterController con;
 		super(player, shoebill, eventManager);
 		this.player = player;
 		this.con = con;
-		
+		setCaption("Character Mangement");
 	}
 	public void show(){
 		try {
 			List<Character> Characters = AccountStore.getInstance().getAccount(player).getCharacters();
 			for(final Character c :Characters){
+				DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 				dialogListItems.add(
-						new DialogListItem("- "+c.getCharacterName()+" "+c.getBirthdate().toGMTString())
+						new DialogListItem("- "+c.getCharacterName()+" "+c.getHisOrHerGender()+" "+df.format(c.getBirthdate()))
 						{
 							@Override
 							public void onItemSelect() {
@@ -54,8 +58,7 @@ private CharacterController con;
 				{
 					@Override
 					public void onItemSelect() {
-					
-						
+						new CharacterCreationManager(player, shoebill, rootEventManager, con);
 					}
 
 				});
