@@ -1,7 +1,7 @@
 package nl.ecb.samp.ericrp.model;
 
 import java.util.List;
-
+import nl.ecb.samp.ericrp.model.Character;
 public class Account {
 	private String Password,Username,Email;
 	private int ID;
