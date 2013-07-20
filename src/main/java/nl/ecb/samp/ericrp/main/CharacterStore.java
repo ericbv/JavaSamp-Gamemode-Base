@@ -6,6 +6,7 @@ import java.util.Map;
 import net.gtaun.shoebill.object.Player;
 import nl.ecb.samp.ericrp.exceptions.NoCharacterSelectedException;
 import nl.ecb.samp.ericrp.exceptions.playerAlreadyOnCharacterException;
+import nl.ecb.samp.ericrp.model.Character;
 
 public class CharacterStore {
 	private Map<Player,Character> characterList;
@@ -38,7 +39,7 @@ public class CharacterStore {
 
 	}
 	public void setCharacter(Player p, Character character) throws playerAlreadyOnCharacterException{
-		if(!!isOnCharacter(p) == false){
+		if(isOnCharacter(p)){
 			throw new playerAlreadyOnCharacterException();
 		}
 		characterList.put(p, character);

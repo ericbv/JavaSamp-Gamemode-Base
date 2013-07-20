@@ -31,7 +31,7 @@ public class AccountInputController {
 		this.shoebill = shoebill;
 		this.eventManager = new ManagedEventManager(rootEventManager);
 		this.store = AccountStore.getInstance();
-		this.con = new AccountController();
+		this.con = new AccountController(shoebill,rootEventManager);
 		eventManager.registerHandler(PlayerConnectEvent.class, playerEventHandler, HandlerPriority.NORMAL);
 		eventManager.registerHandler(PlayerDisconnectEvent.class, playerEventHandler, HandlerPriority.NORMAL);
 		eventManager.registerHandler(PlayerCommandEvent.class, playerEventHandler, HandlerPriority.NORMAL);
