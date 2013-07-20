@@ -9,6 +9,7 @@ import net.gtaun.shoebill.event.PlayerEventHandler;
 import net.gtaun.shoebill.event.player.PlayerCommandEvent;
 import net.gtaun.shoebill.event.player.PlayerConnectEvent;
 import net.gtaun.shoebill.event.player.PlayerDisconnectEvent;
+import net.gtaun.shoebill.event.player.PlayerRequestSpawnEvent;
 import net.gtaun.shoebill.event.player.PlayerSpawnEvent;
 import net.gtaun.shoebill.object.Player;
 import net.gtaun.util.event.EventManager;
@@ -36,7 +37,7 @@ public class AccountInputController {
 		eventManager.registerHandler(PlayerConnectEvent.class, playerEventHandler, HandlerPriority.NORMAL);
 		eventManager.registerHandler(PlayerDisconnectEvent.class, playerEventHandler, HandlerPriority.NORMAL);
 		eventManager.registerHandler(PlayerCommandEvent.class, playerEventHandler, HandlerPriority.NORMAL);
-		eventManager.registerHandler(PlayerSpawnEvent.class, playerEventHandler, HandlerPriority.HIGH);
+		eventManager.registerHandler(PlayerRequestSpawnEvent.class, playerEventHandler, HandlerPriority.HIGH);
 	}
 
 	public void uninitialize()
@@ -94,10 +95,11 @@ public class AccountInputController {
 			}
 		}
 		@Override
-		public void onPlayerSpawn(PlayerSpawnEvent event){
+		public void onPlayerRequestSpawn(PlayerRequestSpawnEvent event){
 			Player p = event.getPlayer();
 			if(store.isLoggedIn(p)){
 				new AccountManagerDialog(p, shoebill, eventManager,con).show();
+				event.disallow();
 			}
 		}
 	};

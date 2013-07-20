@@ -9,6 +9,7 @@ import net.gtaun.shoebill.event.PlayerEventHandler;
 import net.gtaun.shoebill.event.player.PlayerCommandEvent;
 import net.gtaun.shoebill.event.player.PlayerConnectEvent;
 import net.gtaun.shoebill.event.player.PlayerDisconnectEvent;
+import net.gtaun.shoebill.event.player.PlayerRequestSpawnEvent;
 import net.gtaun.shoebill.event.player.PlayerSpawnEvent;
 import net.gtaun.shoebill.object.Player;
 import net.gtaun.util.event.EventManager;
@@ -38,7 +39,7 @@ public class CharacterInputController {
 		this.store = AccountStore.getInstance();
 		this.con = new CharacterController(shoebill,rootEventManager);
 		eventManager.registerHandler(PlayerLoginEvent.class, accountEventHandler, HandlerPriority.NORMAL);
-		eventManager.registerHandler(PlayerSpawnEvent.class, playerEventHandler, HandlerPriority.NORMAL);
+		eventManager.registerHandler(PlayerRequestSpawnEvent.class, playerEventHandler, HandlerPriority.NORMAL);
 	
 	}
 
@@ -59,13 +60,14 @@ public class CharacterInputController {
 	
 	private PlayerEventHandler playerEventHandler = new PlayerEventHandler()
 	{
-		public void onPlayerSpawn(PlayerSpawnEvent event)
+		public void onPlayerRequestSpawn(PlayerRequestSpawnEvent event)
 		{
 			Player player = event.getPlayer();
 			try {
 				con.SpawnCharacter(player);
 			} catch (NoCharacterSelectedException e) {
 				new CharacterSelectionDialog(player, shoebill, eventManager, con).show();
+				event.disallow();
 			}
 		}
 	
