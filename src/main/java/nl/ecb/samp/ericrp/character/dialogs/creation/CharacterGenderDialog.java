@@ -1,4 +1,4 @@
-package nl.ecb.samp.ericrp.character.dialog.creation;
+package nl.ecb.samp.ericrp.character.dialogs.creation;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import net.gtaun.shoebill.Shoebill;
 import net.gtaun.shoebill.object.Player;
 import net.gtaun.util.event.EventManager;
 import nl.ecb.samp.ericrp.account.exceptions.NotLoggedInException;
-import nl.ecb.samp.ericrp.character.dialog.CharacterCreationManager;
+import nl.ecb.samp.ericrp.character.dialogs.CharacterCreationManager;
 import nl.ecb.samp.ericrp.character.exceptions.playerAlreadyOnCharacterException;
 import nl.ecb.samp.ericrp.character.model.Character;
 import nl.ecb.samp.ericrp.character.model.Character.Gender;

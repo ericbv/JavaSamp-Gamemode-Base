@@ -17,7 +17,7 @@ import nl.ecb.samp.ericrp.account.events.handler.AccountEventHandler;
 import nl.ecb.samp.ericrp.account.model.Account;
 import nl.ecb.samp.ericrp.character.exceptions.NoCharacterSelectedException;
 import nl.ecb.samp.ericrp.character.model.Character;
-import nl.ecb.samp.ericrp.character.dialog.selection.CharacterSelectionDialog;
+import nl.ecb.samp.ericrp.character.dialogs.selection.CharacterSelectionDialog;
 import nl.ecb.samp.ericrp.main.AccountStore;
 import nl.ecb.samp.ericrp.main.CharacterStore;
 import nl.ecb.samp.ericrp.persistance.MysqlAdapter;

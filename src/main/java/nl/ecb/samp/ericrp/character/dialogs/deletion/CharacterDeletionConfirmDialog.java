@@ -1,4 +1,4 @@
-package nl.ecb.samp.ericrp.character.dialog.deletion;
+package nl.ecb.samp.ericrp.character.dialogs.deletion;
 
 import net.gtaun.shoebill.Shoebill;
 import net.gtaun.shoebill.constant.DialogStyle;
@@ -8,7 +8,7 @@ import net.gtaun.shoebill.object.Player;
 import net.gtaun.util.event.EventManager;
 import net.gtaun.util.event.ManagedEventManager;
 import net.gtaun.util.event.EventManager.HandlerPriority;
-import nl.ecb.samp.ericrp.character.dialog.CharacterDeletionManager;
+import nl.ecb.samp.ericrp.character.dialogs.CharacterDeletionManager;
 import nl.ecb.samp.ericrp.character.model.Character;
 import nl.ecb.samp.ericrp.dialog.AbstractDialog;
 

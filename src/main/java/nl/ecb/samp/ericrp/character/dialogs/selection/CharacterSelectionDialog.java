@@ -1,4 +1,4 @@
-package nl.ecb.samp.ericrp.character.dialog.selection;
+package nl.ecb.samp.ericrp.character.dialogs.selection;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -13,8 +13,8 @@ import nl.ecb.samp.ericrp.character.controllers.CharacterController;
 import nl.ecb.samp.ericrp.character.exceptions.playerAlreadyOnCharacterException;
 import nl.ecb.samp.ericrp.character.model.Character;
 import nl.ecb.samp.ericrp.dialog.AbstractListDialog;
-import nl.ecb.samp.ericrp.character.dialog.CharacterCreationManager;
-import nl.ecb.samp.ericrp.character.dialog.CharacterDeletionManager;
+import nl.ecb.samp.ericrp.character.dialogs.CharacterCreationManager;
+import nl.ecb.samp.ericrp.character.dialogs.CharacterDeletionManager;
 import nl.ecb.samp.ericrp.main.AccountStore;
 
 public class CharacterSelectionDialog extends AbstractListDialog {

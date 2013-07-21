@@ -1,4 +1,4 @@
-package nl.ecb.samp.ericrp.character.dialog;
+package nl.ecb.samp.ericrp.character.dialogs;
 
 import net.gtaun.shoebill.Shoebill;
 import net.gtaun.shoebill.object.Player;
@@ -6,9 +6,9 @@ import net.gtaun.util.event.EventManager;
 import nl.ecb.samp.ericrp.account.exceptions.NotLoggedInException;
 import nl.ecb.samp.ericrp.character.controllers.CharacterController;
 import nl.ecb.samp.ericrp.character.model.Character;
-import nl.ecb.samp.ericrp.character.dialog.deletion.CharacterDeletionConfirmDialog;
-import nl.ecb.samp.ericrp.character.dialog.deletion.CharacterDeletionSelectionDialog;
-import nl.ecb.samp.ericrp.character.dialog.selection.CharacterSelectionDialog;
+import nl.ecb.samp.ericrp.character.dialogs.deletion.CharacterDeletionConfirmDialog;
+import nl.ecb.samp.ericrp.character.dialogs.deletion.CharacterDeletionSelectionDialog;
+import nl.ecb.samp.ericrp.character.dialogs.selection.CharacterSelectionDialog;
 import nl.ecb.samp.ericrp.main.AccountStore;
 
 public class CharacterDeletionManager {

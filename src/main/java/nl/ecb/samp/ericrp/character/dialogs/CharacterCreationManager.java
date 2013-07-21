@@ -1,4 +1,4 @@
-package nl.ecb.samp.ericrp.character.dialog;
+package nl.ecb.samp.ericrp.character.dialogs;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -11,18 +11,18 @@ import nl.ecb.samp.ericrp.character.model.Character;
 import nl.ecb.samp.ericrp.character.model.Character.*;
 import nl.ecb.samp.ericrp.dialog.AbstractDialog;
 import nl.ecb.samp.ericrp.dialog.AbstractInputDialog;
-import nl.ecb.samp.ericrp.character.dialog.creation.CharacterDayDialog;
-import nl.ecb.samp.ericrp.character.dialog.creation.CharacterFirstnameDialog;
-import nl.ecb.samp.ericrp.character.dialog.creation.CharacterGenderDialog;
-import nl.ecb.samp.ericrp.character.dialog.creation.CharacterLastnameDialog;
-import nl.ecb.samp.ericrp.character.dialog.creation.CharacterMonthDialog;
-import nl.ecb.samp.ericrp.character.dialog.creation.CharacterYearDialog;
-import nl.ecb.samp.ericrp.character.dialog.creation.exceptions.InputTooHighException;
-import nl.ecb.samp.ericrp.character.dialog.creation.exceptions.InputTooLowException;
-import nl.ecb.samp.ericrp.character.dialog.creation.exceptions.NoInputException;
-import nl.ecb.samp.ericrp.character.dialog.creation.exceptions.TooLongInputException;
-import nl.ecb.samp.ericrp.character.dialog.creation.exceptions.TooShortInputException;
-import nl.ecb.samp.ericrp.character.dialog.selection.CharacterSelectionDialog;
+import nl.ecb.samp.ericrp.character.dialogs.creation.CharacterDayDialog;
+import nl.ecb.samp.ericrp.character.dialogs.creation.CharacterFirstnameDialog;
+import nl.ecb.samp.ericrp.character.dialogs.creation.CharacterGenderDialog;
+import nl.ecb.samp.ericrp.character.dialogs.creation.CharacterLastnameDialog;
+import nl.ecb.samp.ericrp.character.dialogs.creation.CharacterMonthDialog;
+import nl.ecb.samp.ericrp.character.dialogs.creation.CharacterYearDialog;
+import nl.ecb.samp.ericrp.character.dialogs.creation.exceptions.InputTooHighException;
+import nl.ecb.samp.ericrp.character.dialogs.creation.exceptions.InputTooLowException;
+import nl.ecb.samp.ericrp.character.dialogs.creation.exceptions.NoInputException;
+import nl.ecb.samp.ericrp.character.dialogs.creation.exceptions.TooLongInputException;
+import nl.ecb.samp.ericrp.character.dialogs.creation.exceptions.TooShortInputException;
+import nl.ecb.samp.ericrp.character.dialogs.selection.CharacterSelectionDialog;
 import nl.ecb.samp.ericrp.persistance.MysqlAdapter;
 
 public class CharacterCreationManager {

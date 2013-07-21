@@ -14,7 +14,7 @@ import nl.ecb.samp.ericrp.character.exceptions.CharacterAlreadyCreatedException;
 import nl.ecb.samp.ericrp.character.exceptions.NoCharacterSelectedException;
 import nl.ecb.samp.ericrp.character.exceptions.playerAlreadyOnCharacterException;
 import nl.ecb.samp.ericrp.character.model.Character;
-import nl.ecb.samp.ericrp.character.dialog.selection.CharacterSelectionDialog;
+import nl.ecb.samp.ericrp.character.dialogs.selection.CharacterSelectionDialog;
 
 import nl.ecb.samp.ericrp.main.AccountStore;
 import nl.ecb.samp.ericrp.main.CharacterStore;

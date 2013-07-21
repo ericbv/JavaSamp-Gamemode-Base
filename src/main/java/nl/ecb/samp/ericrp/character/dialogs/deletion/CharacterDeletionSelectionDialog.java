@@ -1,4 +1,4 @@
-package nl.ecb.samp.ericrp.character.dialog.deletion;
+package nl.ecb.samp.ericrp.character.dialogs.deletion;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -11,7 +11,7 @@ import net.gtaun.shoebill.event.dialog.DialogResponseEvent;
 import net.gtaun.shoebill.object.Player;
 import net.gtaun.util.event.EventManager;
 import nl.ecb.samp.ericrp.account.exceptions.NotLoggedInException;
-import nl.ecb.samp.ericrp.character.dialog.CharacterDeletionManager;
+import nl.ecb.samp.ericrp.character.dialogs.CharacterDeletionManager;
 import nl.ecb.samp.ericrp.character.model.Character;
 import nl.ecb.samp.ericrp.dialog.AbstractListDialog;
 import nl.ecb.samp.ericrp.main.AccountStore;

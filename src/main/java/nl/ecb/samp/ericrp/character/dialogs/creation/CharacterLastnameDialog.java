@@ -1,4 +1,4 @@
-package nl.ecb.samp.ericrp.character.dialog.creation;
+package nl.ecb.samp.ericrp.character.dialogs.creation;
 
 import net.gtaun.shoebill.Shoebill;
 import net.gtaun.shoebill.event.DialogEventHandler;
@@ -8,17 +8,17 @@ import net.gtaun.util.event.EventManager;
 import net.gtaun.util.event.ManagedEventManager;
 import net.gtaun.util.event.EventManager.HandlerPriority;
 import nl.ecb.samp.ericrp.dialog.AbstractInputDialog;
-import nl.ecb.samp.ericrp.character.dialog.CharacterCreationManager;
-import nl.ecb.samp.ericrp.character.dialog.creation.exceptions.InputTooHighException;
-import nl.ecb.samp.ericrp.character.dialog.creation.exceptions.InputTooLowException;
-import nl.ecb.samp.ericrp.character.dialog.creation.exceptions.NoInputException;
+import nl.ecb.samp.ericrp.character.dialogs.CharacterCreationManager;
+import nl.ecb.samp.ericrp.character.dialogs.creation.exceptions.NoInputException;
+import nl.ecb.samp.ericrp.character.dialogs.creation.exceptions.TooLongInputException;
+import nl.ecb.samp.ericrp.character.dialogs.creation.exceptions.TooShortInputException;
 
-public class CharacterYearDialog extends AbstractInputDialog {
+public class CharacterLastnameDialog extends AbstractInputDialog {
 	private Player p;
 	private CharacterCreationManager characterCreationManager;
 	private ManagedEventManager eventManager;
 
-	public CharacterYearDialog(Player player, Shoebill shoebill,
+	public CharacterLastnameDialog(Player player, Shoebill shoebill,
 			EventManager rootEventManager, String info,
 			CharacterCreationManager characterCreationManager) {
 		super(player, shoebill, rootEventManager, info);
@@ -30,7 +30,7 @@ public class CharacterYearDialog extends AbstractInputDialog {
 	}
 
 	public void show() {
-		this.setButtonOk("Create");
+		this.setButtonOk("Next");
 		this.setButtonCancel("Back");
 		super.show();
 	}
@@ -40,41 +40,34 @@ public class CharacterYearDialog extends AbstractInputDialog {
 			if (event.getDialogResponse() == 1) {
 				Player p = event.getPlayer();
 				try {
-					characterCreationManager.RecieveYear(event.getInputText());
-				} catch (InputTooHighException e) {
-					new CharacterYearDialog(
-							p,
-							shoebill,
-							rootEventManager,
-							"[ERROR]That number is too high to be a birth year, 2013 is the maximum.\nEnter a Proper year of birth[1940-2013]::",
-							characterCreationManager).show();
-					;
-				} catch (InputTooLowException e) {
-					new CharacterYearDialog(
-							p,
-							shoebill,
-							rootEventManager,
-							"[ERROR]That number is too low to be a birth year, 1940 is the minimum.\nEnter a Proper year of birth[1940-2013]::",
-							characterCreationManager).show();
-					;
+					characterCreationManager.RecieveLastname(event
+							.getInputText());
 				} catch (NoInputException e) {
-					new CharacterYearDialog(
+					new CharacterLastnameDialog(
 							p,
 							shoebill,
 							rootEventManager,
-							"[ERROR]Enter a number...\nEnter a Proper year of birth[1940-2013]:",
+							"[ERROR]Please put in a lastname.\nEnter a Proper lastname:",
 							characterCreationManager).show();
-				}catch (NumberFormatException e){
-					new CharacterDayDialog(
+				} catch (TooShortInputException e) {
+					new CharacterLastnameDialog(
 							p,
 							shoebill,
 							rootEventManager,
-							"[ERROR]Enter a number, NO TEXT...\nEnter a Proper day of birth[1-30]:",
+							"[ERROR]That lastname is to short min 4 characters.\nEnter a Proper lastname:",
 							characterCreationManager).show();
+				} catch (TooLongInputException e) {
+					new CharacterLastnameDialog(
+							p,
+							shoebill,
+							rootEventManager,
+							"[ERROR]That lastname is to long max 12 characters.\nEnter a Proper lastname:",
+							characterCreationManager).show();
+					;
 				}
 				event.setProcessed();
 			} else {
-				characterCreationManager.goBack(CharacterYearDialog.this);
+				characterCreationManager.goBack(CharacterLastnameDialog.this);
 			}
 
 		}
