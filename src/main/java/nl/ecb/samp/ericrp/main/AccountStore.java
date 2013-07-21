@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.gtaun.shoebill.object.Player;
-import nl.ecb.samp.ericrp.exceptions.NotLoggedInException;
-import nl.ecb.samp.ericrp.exceptions.playeridAlreadyLoggedInException;
-import nl.ecb.samp.ericrp.model.Account;
+import nl.ecb.samp.ericrp.account.exceptions.NotLoggedInException;
+import nl.ecb.samp.ericrp.account.exceptions.playeridAlreadyLoggedInException;
+import nl.ecb.samp.ericrp.account.model.Account;
 
 public class AccountStore {
 	private Map<Player,Account> accountList;

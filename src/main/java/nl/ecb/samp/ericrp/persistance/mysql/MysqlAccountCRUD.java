@@ -10,9 +10,9 @@ import java.util.List;
 import javax.security.auth.login.AccountNotFoundException;
 
 import net.gtaun.shoebill.object.Player;
-import nl.ecb.samp.ericrp.exceptions.AccountAlreadyCreatedException;
+import nl.ecb.samp.ericrp.account.exceptions.AccountAlreadyCreatedException;
+import nl.ecb.samp.ericrp.account.model.Account;
 import nl.ecb.samp.ericrp.main.Main;
-import nl.ecb.samp.ericrp.model.Account;
 
 public class MysqlAccountCRUD {
 	public Account getAccount(Connection connection, String username, String password) throws AccountNotFoundException{

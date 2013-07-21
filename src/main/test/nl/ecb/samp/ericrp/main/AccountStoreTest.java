@@ -4,9 +4,9 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 import net.gtaun.shoebill.object.Player;
-import nl.ecb.samp.ericrp.exceptions.NotLoggedInException;
-import nl.ecb.samp.ericrp.exceptions.playeridAlreadyLoggedInException;
-import nl.ecb.samp.ericrp.model.Account;
+import nl.ecb.samp.ericrp.account.exceptions.NotLoggedInException;
+import nl.ecb.samp.ericrp.account.exceptions.playeridAlreadyLoggedInException;
+import nl.ecb.samp.ericrp.account.model.Account;
 
 import org.junit.Test;
 
