@@ -9,6 +9,8 @@ public class CarEntrance extends Entrance {
 			AbstractBuilding building) {
 		super(locEnter, locExit, building);
 	}
+	
+	@Override
 	public void enter(Player p){
 		super.enter(p);
 		if(getBuilding().attemptToEnter(p)){
@@ -17,5 +19,13 @@ public class CarEntrance extends Entrance {
 		}
 		
 	}
-
+	@Override
+	public void exit(Player p){
+		super.exit(p);
+		if(getBuilding().attemptToExit(p)){
+			p.setLocation(getLocExit());
+			return;
+		}
+		
+	}
 }

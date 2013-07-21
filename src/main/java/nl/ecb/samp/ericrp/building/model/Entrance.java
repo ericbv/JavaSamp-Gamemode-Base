@@ -48,4 +48,13 @@ public class Entrance {
 			}
 		}
 	}
+
+	public void exit(Player p) {
+		if (!p.isInAnyVehicle()) {
+			if (building.attemptToExit(p)) {
+				p.setLocation(locExit);
+				return;
+			}
+		}
+	}
 }
