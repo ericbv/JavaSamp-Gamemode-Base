@@ -4,14 +4,13 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import javax.security.auth.login.AccountNotFoundException;
-
 import net.gtaun.shoebill.Shoebill;
-import net.gtaun.shoebill.data.Color;
 import net.gtaun.shoebill.event.PlayerEventHandler;
 import net.gtaun.shoebill.event.player.PlayerCommandEvent;
 import net.gtaun.shoebill.event.player.PlayerConnectEvent;
 import net.gtaun.shoebill.event.player.PlayerDisconnectEvent;
+import net.gtaun.shoebill.event.player.PlayerRequestSpawnEvent;
+import net.gtaun.shoebill.event.player.PlayerSpawnEvent;
 import net.gtaun.shoebill.object.Player;
 import net.gtaun.util.event.EventManager;
 import net.gtaun.util.event.ManagedEventManager;
@@ -20,7 +19,6 @@ import nl.ecb.samp.ericrp.dialog.user.AccountManagerDialog;
 import nl.ecb.samp.ericrp.dialog.user.LoginDialog;
 import nl.ecb.samp.ericrp.dialog.user.RegisterPassword;
 import nl.ecb.samp.ericrp.exceptions.NotLoggedInException;
-import nl.ecb.samp.ericrp.exceptions.playeridAlreadyLoggedInException;
 import nl.ecb.samp.ericrp.main.AccountStore;
 import nl.ecb.samp.ericrp.main.Main;
 
@@ -35,10 +33,11 @@ public class AccountInputController {
 		this.shoebill = shoebill;
 		this.eventManager = new ManagedEventManager(rootEventManager);
 		this.store = AccountStore.getInstance();
-		this.con = new AccountController();
+		this.con = new AccountController(shoebill,rootEventManager);
 		eventManager.registerHandler(PlayerConnectEvent.class, playerEventHandler, HandlerPriority.NORMAL);
 		eventManager.registerHandler(PlayerDisconnectEvent.class, playerEventHandler, HandlerPriority.NORMAL);
 		eventManager.registerHandler(PlayerCommandEvent.class, playerEventHandler, HandlerPriority.NORMAL);
+		eventManager.registerHandler(PlayerRequestSpawnEvent.class, playerEventHandler, HandlerPriority.HIGH);
 	}
 
 	public void uninitialize()
@@ -51,7 +50,6 @@ public class AccountInputController {
 		@Override
 		public void onPlayerConnect(PlayerConnectEvent event)
 		{
-			//TODO add dialog here
 			Player player = event.getPlayer();
 			if(con.isRegisterdMember(player)){
 				new LoginDialog(player, shoebill, eventManager, "Password: ",con).show();
@@ -94,6 +92,14 @@ public class AccountInputController {
 				new AccountManagerDialog(player, shoebill, eventManager,con).show();
 				event.setProcessed();
 				return;
+			}
+		}
+		@Override
+		public void onPlayerRequestSpawn(PlayerRequestSpawnEvent event){
+			Player p = event.getPlayer();
+			if(!store.isLoggedIn(p)){
+				new LoginDialog(p, shoebill, eventManager, "Password: ",con).show();
+				event.disallow();
 			}
 		}
 	};

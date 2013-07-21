@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.security.auth.login.AccountNotFoundException;
 
@@ -21,7 +23,9 @@ public class MysqlAccountCRUD {
 			if(resultSet.next()){
 				String email = resultSet.getString(4);
 				int iD = resultSet.getInt(1);
-				acc = Account.load(username, password, email, iD);
+				List<Character> characters = new ArrayList<Character>();
+				acc = Account.load(username, password, email, iD, characters);
+
 			}
 			else{
 				throw new AccountNotFoundException();
@@ -43,11 +47,16 @@ public class MysqlAccountCRUD {
 			proccesMysqlError(ex);
 		}
 	}
-	public void createAccount(Connection connection, String username,String password,String email) throws AccountAlreadyCreatedException{
+	public int createAccount(Connection connection, String username,String password,String email) throws AccountAlreadyCreatedException{
 		try {
 			Statement statement = connection.createStatement();
 			statement.execute(" INSERT INTO accounts (Username, Password,Email) VALUES ('"+username+"', '"+password+"', '"+email+ " ')" );
 			System.out.println(connection.getAutoCommit());
+			ResultSet resultSet = statement.executeQuery("SELECT AcountID FROM accounts WHERE Username='"+username+"'AND Password='"+password+"'");
+			if(resultSet.next()){
+				int iD = resultSet.getInt(1);
+				return iD;
+			}
 
 		}
 		catch (SQLException ex){
@@ -57,6 +66,7 @@ public class MysqlAccountCRUD {
 				proccesMysqlError(ex);
 			}
 		}
+		return -1;
 	}
 	public boolean isAccount(Connection connection, Player p) {
 		try {

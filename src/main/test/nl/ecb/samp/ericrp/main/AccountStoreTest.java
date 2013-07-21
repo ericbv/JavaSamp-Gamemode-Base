@@ -23,7 +23,8 @@ public class AccountStoreTest {
 	@Test
 	public void testIsLoggedIn() throws playeridAlreadyLoggedInException {
 		AccountStore accs = AccountStore.getInstance();
-		Account a = Account.load("ericbv", "lol123", "e.bonestroo@gmail.com", 3);
+		Account a = Account.load("ericbv", "lol123", "e.bonestroo@gmail.com", 3,null);
+
 		p = mock(Player.class);
 		assertEquals(false,accs.isLoggedIn(p));
 		accs.setAccount(p, a);
@@ -34,7 +35,7 @@ public class AccountStoreTest {
 	@Test
 	public void testSetGetAccount() throws playeridAlreadyLoggedInException, NotLoggedInException {
 		AccountStore accs = AccountStore.getInstance();
-		Account a = Account.load("ericbv", "lol123", "e.bonestroo@gmail.com", 3);
+		Account a = Account.load("ericbv", "lol123", "e.bonestroo@gmail.com", 3,null);
 		p = mock(Player.class);
 		accs.setAccount(p, a);
 		assertEquals(a,accs.getAccount(p));
@@ -42,8 +43,8 @@ public class AccountStoreTest {
 	@Test(expected=playeridAlreadyLoggedInException.class)
 	public void testSetGetAccountAlreadyLoggedIn() throws playeridAlreadyLoggedInException, NotLoggedInException {
 		AccountStore accs = AccountStore.getInstance();
-		Account a = Account.load("ericbv", "lol123", "e.bonestroo@gmail.com", 3);
-		Account a2 = Account.load("joh999", "lol123", "j.bonestroo@gmail.com", 3);
+		Account a = Account.load("ericbv", "lol123", "e.bonestroo@gmail.com", 3,null);
+		Account a2 = Account.load("joh999", "lol123", "j.bonestroo@gmail.com", 3,null);
 		p = mock(Player.class);
 		accs.setAccount(p, a);
 		accs.setAccount(p, a2);
@@ -52,7 +53,7 @@ public class AccountStoreTest {
 	@Test(expected=NotLoggedInException.class)
 	public void testSetGetAccountNotLoggedIn() throws playeridAlreadyLoggedInException, NotLoggedInException {
 		AccountStore accs = AccountStore.getInstance();
-		Account a = Account.load("ericbv", "lol123", "e.bonestroo@gmail.com", 3);
+		Account a = Account.load("ericbv", "lol123", "e.bonestroo@gmail.com", 3,null);
 		p = mock(Player.class);
 		Player p2 = mock(Player.class);
 		accs.setAccount(p, a);
@@ -61,7 +62,7 @@ public class AccountStoreTest {
 	@Test(expected=NotLoggedInException.class)
 	public void testRemoveAccount() throws playeridAlreadyLoggedInException, NotLoggedInException{
 		AccountStore accs = AccountStore.getInstance();
-		Account a = Account.load("ericbv", "lol123", "e.bonestroo@gmail.com", 3);
+		Account a = Account.load("ericbv", "lol123", "e.bonestroo@gmail.com", 3,null);
 		p = mock(Player.class);
 		accs.setAccount(p, a);
 		assertEquals(a,accs.getAccount(p));
