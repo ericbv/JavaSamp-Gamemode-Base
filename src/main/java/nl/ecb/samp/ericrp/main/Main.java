@@ -41,7 +41,6 @@ public class Main extends Gamemode{
 		Server server = store.getServer();
 		World world = store.getWorld();
 		world.addPlayerClass(3,(float)1958.3783,(float)1343.1572,(float)15.3746,(float)270.1425,0,0,24,300,-1,-1);
-		logger.info("Done.");
 	}
 
 }

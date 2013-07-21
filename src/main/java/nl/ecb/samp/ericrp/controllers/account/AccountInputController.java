@@ -97,8 +97,8 @@ public class AccountInputController {
 		@Override
 		public void onPlayerRequestSpawn(PlayerRequestSpawnEvent event){
 			Player p = event.getPlayer();
-			if(store.isLoggedIn(p)){
-				new AccountManagerDialog(p, shoebill, eventManager,con).show();
+			if(!store.isLoggedIn(p)){
+				new LoginDialog(p, shoebill, eventManager, "Password: ",con).show();
 				event.disallow();
 			}
 		}

@@ -2,7 +2,8 @@ package nl.ecb.samp.ericrp.model;
 
 import java.util.List;
 import nl.ecb.samp.ericrp.model.Character;
-public class Account {
+import nl.ecb.samp.ericrp.persistance.MysqlAdapter;
+public class Account implements SaveAble {
 	private String Password,Username,Email;
 	private int ID;
 	private List<Character> characters;
@@ -50,6 +51,11 @@ public class Account {
 	}
 	public void setCharacters(List<Character> characters) {
 		this.characters = characters;
+	}
+	@Override
+	public void save() {
+		MysqlAdapter.getInstance().saveAccount(this);
+		
 	}
 
 

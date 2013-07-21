@@ -9,6 +9,7 @@ import net.gtaun.shoebill.object.Player;
 import net.gtaun.util.event.EventManager;
 import net.gtaun.util.event.ManagedEventManager;
 import nl.ecb.samp.ericrp.dialog.character.selection.CharacterSelectionDialog;
+import nl.ecb.samp.ericrp.exceptions.CharacterAlreadyCreatedException;
 import nl.ecb.samp.ericrp.exceptions.NoCharacterSelectedException;
 import nl.ecb.samp.ericrp.exceptions.NotLoggedInException;
 import nl.ecb.samp.ericrp.exceptions.playerAlreadyOnCharacterException;
@@ -17,6 +18,7 @@ import nl.ecb.samp.ericrp.main.AccountStore;
 import nl.ecb.samp.ericrp.main.CharacterStore;
 import nl.ecb.samp.ericrp.model.Account;
 import nl.ecb.samp.ericrp.model.Character;
+import nl.ecb.samp.ericrp.persistance.MysqlAdapter;
 
 public class CharacterController {
 	private CharacterStore store;
@@ -50,6 +52,13 @@ public class CharacterController {
 	}
 
 	public void unLoadChar(Player p) {
+		Character c;
+		try {
+			c = store.getCharacter(p);
+			MysqlAdapter.getInstance().saveCharacter(c);
+		} catch (NoCharacterSelectedException e) {
+			e.printStackTrace();
+		}
 		store.removeCharacter(p);
 		new CharacterSelectionDialog(p, shoebill, eventManager, this).show();
 	}
@@ -58,6 +67,11 @@ public class CharacterController {
 		Account a;
 		try {
 			a = AccountStore.getInstance().getAccount(p);
+			try {
+				MysqlAdapter.getInstance().createCharacter(a, c);
+			} catch (CharacterAlreadyCreatedException e) {
+				e.printStackTrace();
+			}
 			List<Character> characters = a.getCharacters();
 			characters.add(c);
 			a.setCharacters(characters);
@@ -67,12 +81,16 @@ public class CharacterController {
 		new CharacterSelectionDialog(p, shoebill, eventManager, this).show();
 	}
 
-	public void deleteCharacter() {
-		//TODO IMPLEMENT
+	public void deleteCharacter(Character c, Account a) {
+		List<Character> characters = a.getCharacters();
+		characters.remove(c);
+		MysqlAdapter.getInstance().deleteCharacter(c);
 	}
 
 	public void SpawnCharacter(Player player) throws NoCharacterSelectedException {
-		player.setSkin(store.getCharacter(player).getModelID());
+		Character c = store.getCharacter(player);
+		//shoebill.getResourceManager().getGamemode().getLogger().info("Modelid:"+c.getModelID());
+		player.setSkin(c.getModelID());
 		
 	}
 }

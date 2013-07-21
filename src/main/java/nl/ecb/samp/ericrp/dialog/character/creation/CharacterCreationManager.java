@@ -21,6 +21,7 @@ import nl.ecb.samp.ericrp.dialog.character.creation.exceptions.TooShortInputExce
 import nl.ecb.samp.ericrp.dialog.character.selection.CharacterSelectionDialog;
 import nl.ecb.samp.ericrp.model.Character.*;
 import nl.ecb.samp.ericrp.model.Character;
+import nl.ecb.samp.ericrp.persistance.MysqlAdapter;
 
 public class CharacterCreationManager {
 	private Player p;
@@ -73,6 +74,9 @@ public class CharacterCreationManager {
 			throw new TooLongInputException();
 		} else if (lastName.length() < 3) {
 			throw new TooShortInputException();
+		}else if(!MysqlAdapter.getInstance().isCharacterNameAvalible(firstName + "_" + lastName)){
+			new CharacterFirstnameDialog(p, shoebill, rootEventManager,
+					"[ERROR]That name is already choosen, please enter another name..\nEnter a firstname:", this).show();
 		} else {
 			this.lastName = lastName;
 		}
@@ -95,8 +99,6 @@ public class CharacterCreationManager {
 		} else if (iDay > 30) {
 			throw new InputTooHighException();
 		}
-		shoebill.getResourceManager().getGamemode().getLogger()
-				.info("Day:" + iDay + "");
 		this.day = iDay;
 		new CharacterMonthDialog(p, shoebill, rootEventManager,
 				"Please enter the Month[1-12] you were born.", this).show();
@@ -134,11 +136,11 @@ public class CharacterCreationManager {
 			Character c;
 			if (day < 10) {
 				if (month < 10) {
-					c = Character.load(firstName + "_" + lastName,
+					c = Character.create(firstName + "_" + lastName,
 							BaseModelID(), df.parse("0" + month + "-0" + day
 									+ "-" + this.year), gender);
 				} else {
-					c = Character.load(firstName + "_" + lastName,
+					c = Character.create(firstName + "_" + lastName,
 							BaseModelID(),
 							df.parse(month + "-0" + day + "-" + this.year),
 							gender);
@@ -147,13 +149,13 @@ public class CharacterCreationManager {
 				if (month < 10) {
 
 					c = Character
-							.load(firstName + "_" + lastName,
+							.create(firstName + "_" + lastName,
 									BaseModelID(),
 									df.parse("0" + month + "-" + day + "-"
 											+ this.year), gender);
 
 				} else {
-					c = Character.load(firstName + "_" + lastName,
+					c = Character.create(firstName + "_" + lastName,
 							BaseModelID(),
 							df.parse(month + "-" + day + "-" + this.year),
 							gender);
