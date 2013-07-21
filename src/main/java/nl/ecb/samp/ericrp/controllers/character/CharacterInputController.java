@@ -42,6 +42,8 @@ public class CharacterInputController {
 				accountEventHandler, HandlerPriority.NORMAL);
 		eventManager.registerHandler(PlayerSpawnEvent.class,
 				playerEventHandler, HandlerPriority.NORMAL);
+		eventManager.registerHandler(PlayerRequestSpawnEvent.class,
+				playerEventHandler, HandlerPriority.NORMAL);
 
 	}
 
