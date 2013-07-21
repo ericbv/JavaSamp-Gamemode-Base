@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.gtaun.shoebill.object.Player;
-import nl.ecb.samp.ericrp.exceptions.NoCharacterSelectedException;
-import nl.ecb.samp.ericrp.exceptions.playerAlreadyOnCharacterException;
-import nl.ecb.samp.ericrp.model.Character;
+import nl.ecb.samp.ericrp.character.exceptions.NoCharacterSelectedException;
+import nl.ecb.samp.ericrp.character.exceptions.playerAlreadyOnCharacterException;
+import nl.ecb.samp.ericrp.character.model.Character;
 
 public class CharacterStore {
 	private Map<Player,Character> characterList;

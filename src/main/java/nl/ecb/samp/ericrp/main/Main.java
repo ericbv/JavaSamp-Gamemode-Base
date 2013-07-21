@@ -10,8 +10,8 @@ import net.gtaun.shoebill.object.World;
 import net.gtaun.shoebill.resource.Gamemode;
 import net.gtaun.util.event.EventManager;
 
-import nl.ecb.samp.ericrp.controllers.account.AccountInputController;
-import nl.ecb.samp.ericrp.controllers.character.CharacterInputController;
+import nl.ecb.samp.ericrp.account.controllers.AccountInputController;
+import nl.ecb.samp.ericrp.character.controllers.CharacterInputController;
 
 
 public class Main extends Gamemode{

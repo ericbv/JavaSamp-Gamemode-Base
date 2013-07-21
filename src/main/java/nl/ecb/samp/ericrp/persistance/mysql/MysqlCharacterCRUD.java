@@ -11,12 +11,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import nl.ecb.samp.ericrp.exceptions.CharacterAlreadyCreatedException;
+import nl.ecb.samp.ericrp.account.model.Account;
+import nl.ecb.samp.ericrp.character.exceptions.CharacterAlreadyCreatedException;
+import nl.ecb.samp.ericrp.character.model.Character;
+import nl.ecb.samp.ericrp.character.model.Character.Gender;
 import nl.ecb.samp.ericrp.main.Main;
-import nl.ecb.samp.ericrp.model.Character;
-import nl.ecb.samp.ericrp.model.Character.Gender;
 
-import nl.ecb.samp.ericrp.model.Account;
 
 public class MysqlCharacterCRUD {
 	DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
