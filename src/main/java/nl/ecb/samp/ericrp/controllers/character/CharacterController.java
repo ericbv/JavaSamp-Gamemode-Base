@@ -81,10 +81,11 @@ public class CharacterController {
 		new CharacterSelectionDialog(p, shoebill, eventManager, this).show();
 	}
 
-	public void deleteCharacter(Character c, Account a) {
+	public void deleteCharacter(Player p,Character c, Account a) {
 		List<Character> characters = a.getCharacters();
 		characters.remove(c);
 		MysqlAdapter.getInstance().deleteCharacter(c);
+		new CharacterSelectionDialog(p, shoebill, eventManager, this).show();
 	}
 
 	public void SpawnCharacter(Player player) throws NoCharacterSelectedException {
