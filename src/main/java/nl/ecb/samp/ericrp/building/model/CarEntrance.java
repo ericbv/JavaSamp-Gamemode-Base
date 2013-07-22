@@ -5,27 +5,35 @@ import net.gtaun.shoebill.object.Player;
 
 public class CarEntrance extends Entrance {
 
-	public CarEntrance(Location locEnter, Location locExit,
+	public CarEntrance(int pickupid, Location locEnter, Location locExit,
 			AbstractBuilding building) {
-		super(locEnter, locExit, building);
+		super(pickupid, locEnter, locExit, building);
 	}
-	
+
 	@Override
-	public void enter(Player p){
+	public void enter(Player p) {
 		super.enter(p);
-		if(getBuilding().attemptToEnter(p)){
-			p.setLocation(getLocEnter());
-			return;
+		if (p.isInAnyVehicle()) {
+			if (getBuilding().attemptToEnter(p)) {
+				p.getVehicle().setLocation(getLocEnter());
+				return;
+			}
+		} else {
+			super.enter(p);
 		}
-		
+
 	}
+
 	@Override
-	public void exit(Player p){
-		super.exit(p);
-		if(getBuilding().attemptToExit(p)){
-			p.setLocation(getLocExit());
-			return;
+	public void exit(Player p) {
+		if (p.isInAnyVehicle()) {
+			if (getBuilding().attemptToExit(p)) {
+				p.getVehicle().setLocation(getLocEnter());
+				return;
+			}
+		} else {
+			super.exit(p);
 		}
-		
+
 	}
 }

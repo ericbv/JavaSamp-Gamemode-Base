@@ -10,6 +10,8 @@ public abstract class AbstractBuilding {
 	public abstract boolean attemptToEnter(Player p);
 
 	public abstract boolean attemptToExit(Player p);
+	
+	public abstract String getTextdraw();
 
 	public List<Entrance> getEntrances() {
 		return entrances;
