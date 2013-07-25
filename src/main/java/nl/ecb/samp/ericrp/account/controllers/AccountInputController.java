@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import net.gtaun.shoebill.Shoebill;
+import net.gtaun.shoebill.data.Color;
 import net.gtaun.shoebill.event.PlayerEventHandler;
 import net.gtaun.shoebill.event.player.PlayerCommandEvent;
 import net.gtaun.shoebill.event.player.PlayerConnectEvent;
@@ -52,6 +53,7 @@ public class AccountInputController {
 		{
 			Player player = event.getPlayer();
 			if(con.isRegisterdMember(player)){
+				player.sendMessage(Color.WHITE, "Hallo daar "+player.getName());
 				new LoginDialog(player, shoebill, eventManager, "Password: ",con).show();
 			}else{
 				new RegisterPassword(player, shoebill, eventManager, "Welcome please enter your desired password:", con).show();
