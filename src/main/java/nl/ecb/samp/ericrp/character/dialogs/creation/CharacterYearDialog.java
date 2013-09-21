@@ -1,13 +1,13 @@
 package nl.ecb.samp.ericrp.character.dialogs.creation;
 
 import net.gtaun.shoebill.Shoebill;
+import net.gtaun.shoebill.common.dialog.AbstractInputDialog;
 import net.gtaun.shoebill.event.DialogEventHandler;
 import net.gtaun.shoebill.event.dialog.DialogResponseEvent;
 import net.gtaun.shoebill.object.Player;
 import net.gtaun.util.event.EventManager;
 import net.gtaun.util.event.ManagedEventManager;
 import net.gtaun.util.event.EventManager.HandlerPriority;
-import nl.ecb.samp.ericrp.dialog.AbstractInputDialog;
 import nl.ecb.samp.ericrp.character.dialogs.CharacterCreationManager;
 import nl.ecb.samp.ericrp.character.dialogs.creation.exceptions.InputTooHighException;
 import nl.ecb.samp.ericrp.character.dialogs.creation.exceptions.InputTooLowException;
@@ -21,17 +21,18 @@ public class CharacterYearDialog extends AbstractInputDialog {
 	public CharacterYearDialog(Player player, Shoebill shoebill,
 			EventManager rootEventManager, String info,
 			CharacterCreationManager characterCreationManager) {
-		super(player, shoebill, rootEventManager, info);
+		super(player, shoebill, rootEventManager);
+		message = info;
 		this.p = player;
 		this.characterCreationManager = characterCreationManager;
 		this.eventManager = new ManagedEventManager(rootEventManager);
-		eventManager.registerHandler(DialogResponseEvent.class,
-				super.getDialog(), dialogEventHandler, HandlerPriority.NORMAL);
+		eventManager.registerHandler(DialogResponseEvent.class, this,
+				dialogEventHandler, HandlerPriority.NORMAL);
 	}
 
 	public void show() {
-		this.setButtonOk("Create");
-		this.setButtonCancel("Back");
+		buttonOk = ("Create");
+		buttonCancel = ("Back");
 		super.show();
 	}
 
@@ -64,7 +65,7 @@ public class CharacterYearDialog extends AbstractInputDialog {
 							rootEventManager,
 							"[ERROR]Enter a number...\nEnter a Proper year of birth[1940-2013]:",
 							characterCreationManager).show();
-				}catch (NumberFormatException e){
+				} catch (NumberFormatException e) {
 					new CharacterDayDialog(
 							p,
 							shoebill,
