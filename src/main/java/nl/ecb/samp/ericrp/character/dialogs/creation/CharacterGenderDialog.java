@@ -8,14 +8,12 @@ import nl.ecb.samp.ericrp.character.dialogs.CharacterCreationManager;
 import nl.ecb.samp.ericrp.character.model.Character.Gender;
 
 public class CharacterGenderDialog extends AbstractListDialog {
-	private Player p;
 	private CharacterCreationManager characterCreationManager;
 
 	public CharacterGenderDialog(Player player, Shoebill shoebill,
 			EventManager eventManager,
 			CharacterCreationManager characterCreationManager) {
 		super(player, shoebill, eventManager);
-		this.p = player;
 		this.characterCreationManager = characterCreationManager;
 		caption = ("Choose Gender:");
 	}
