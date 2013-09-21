@@ -9,18 +9,18 @@ import net.gtaun.shoebill.object.Player;
 import net.gtaun.util.event.EventManager.HandlerPriority;
 import nl.ecb.samp.ericrp.main.CharacterStore;
 
-public class Entrance {
+public class Doorway {
 	private AbstractBuilding building;
 	private Location locEnter;
 	private Location locExit;
 	private Pickup entry;
 
-	public Entrance(int pickupid, Location locEnter, Location locExit,
+	public Doorway(Location locEnter, Location locExit,
 			AbstractBuilding building) {
 		this.locEnter = locEnter;
 		this.locEnter = locEnter;
 		this.building = building;
-		entry = Shoebill.Instance.get().getSampObjectFactory().createPickup(pickupid, 1, locEnter);
+		entry = Shoebill.Instance.get().getSampObjectFactory().createPickup(building.getPickupid(), 1, locEnter);
 		Shoebill.Instance.get().getResourceManager().getGamemode().getEventManager().registerHandler(PlayerPickupEvent.class, playerEventHandler, HandlerPriority.NORMAL);
 	}
 
@@ -71,7 +71,7 @@ public class Entrance {
 			if(event.getPickup().equals(entry)){
 				Player p = event.getPlayer();
 				//TODO add proper cooords
-				Shoebill.Instance.get().getSampObjectFactory().createPlayerTextdraw(p, 0, 0, building.getTextdraw());
+				Shoebill.Instance.get().getSampObjectFactory().createPlayerTextdraw(p, 0, 0, building.getGameText());
 			}
 		}
 	};

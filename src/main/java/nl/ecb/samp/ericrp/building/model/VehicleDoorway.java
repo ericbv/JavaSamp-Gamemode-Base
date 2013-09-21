@@ -3,11 +3,11 @@ package nl.ecb.samp.ericrp.building.model;
 import net.gtaun.shoebill.data.Location;
 import net.gtaun.shoebill.object.Player;
 
-public class CarEntrance extends Entrance {
+public class VehicleDoorway extends Doorway {
 
-	public CarEntrance(int pickupid, Location locEnter, Location locExit,
+	public VehicleDoorway( Location locEnter, Location locExit,
 			AbstractBuilding building) {
-		super(pickupid, locEnter, locExit, building);
+		super(locEnter, locExit, building);
 	}
 
 	@Override
