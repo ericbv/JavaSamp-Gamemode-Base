@@ -1,28 +1,20 @@
 package nl.ecb.samp.ericrp.building.controllers;
 
+
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 
 import net.gtaun.shoebill.Shoebill;
 import net.gtaun.shoebill.event.PlayerEventHandler;
 import net.gtaun.shoebill.event.player.PlayerCommandEvent;
-import net.gtaun.shoebill.event.player.PlayerConnectEvent;
-import net.gtaun.shoebill.event.player.PlayerDisconnectEvent;
-import net.gtaun.shoebill.event.player.PlayerRequestSpawnEvent;
 import net.gtaun.shoebill.object.Player;
 import net.gtaun.util.event.EventManager;
 import net.gtaun.util.event.ManagedEventManager;
 import net.gtaun.util.event.EventManager.HandlerPriority;
-import nl.ecb.samp.ericrp.account.controllers.AccountController;
-import nl.ecb.samp.ericrp.account.dialogs.AccountManagerDialog;
-import nl.ecb.samp.ericrp.account.dialogs.LoginDialog;
-import nl.ecb.samp.ericrp.account.dialogs.RegisterPassword;
-import nl.ecb.samp.ericrp.account.exceptions.NotLoggedInException;
 import nl.ecb.samp.ericrp.building.model.Doorway;
-import nl.ecb.samp.ericrp.main.AccountStore;
 import nl.ecb.samp.ericrp.main.BuildingStore;
 import nl.ecb.samp.ericrp.main.DoorwayList;
 import nl.ecb.samp.ericrp.main.Main;
@@ -40,7 +32,7 @@ public class BuildingInputController {
 		this.eventManager = new ManagedEventManager(rootEventManager);
 		this.store = BuildingStore.getInstance();
 		this.list = DoorwayList.getInstance();
-		this.con= new BuildingController(shoebill, rootEventManager);
+		this.con = new BuildingController(shoebill, rootEventManager, list);
 		eventManager.registerHandler(PlayerCommandEvent.class,
 				playerEventHandler, HandlerPriority.NORMAL);
 	}
@@ -85,4 +77,8 @@ public class BuildingInputController {
 			}
 		}
 	};
+
+	public void uninitialize() {
+		eventManager.cancelAll();
+	}
 }
