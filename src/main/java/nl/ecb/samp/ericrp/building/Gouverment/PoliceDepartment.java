@@ -47,13 +47,17 @@ public class PoliceDepartment extends AbstractBuilding implements
 	}
 
 	@Override
-	public void setLocked(Player p, boolean locked) {
-		LockedDown = locked;
-		if (locked) {
-			p.sendMessage(Color.GREEN, "Door has been Locked");
-		} else {
-			p.sendMessage(Color.GREEN, "Door has been unlocked");
-		}
+	public void lock(Player p) {
+		LockedDown = true;
+		p.sendMessage(Color.GREEN, "Door has been Locked");
+		
+	}
+
+	@Override
+	public void unLock(Player p) {
+		LockedDown = false;
+		p.sendMessage(Color.GREEN, "Door has been unlocked");
+		
 	}
 
 }

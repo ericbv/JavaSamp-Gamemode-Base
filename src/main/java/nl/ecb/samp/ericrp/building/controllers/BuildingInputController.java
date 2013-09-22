@@ -82,7 +82,7 @@ public class BuildingInputController {
 						AbstractBuilding b = e.getBuilding();
 						if (b instanceof LockableBuilding) {
 							LockableBuilding lb = (LockableBuilding) b;
-							lb.setLocked(p, true);
+							lb.lock(p);
 							return;
 						}
 						p.sendMessage(Color.RED,
@@ -101,7 +101,7 @@ public class BuildingInputController {
 						AbstractBuilding b = e.getBuilding();
 						if (b instanceof LockableBuilding) {
 							LockableBuilding lb = (LockableBuilding) b;
-							lb.setLocked(p, false);
+							lb.unLock(p);
 							return;
 						}
 						p.sendMessage(Color.RED,
