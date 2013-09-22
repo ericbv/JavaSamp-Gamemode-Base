@@ -1,19 +1,20 @@
 package nl.ecb.samp.ericrp.building.controllers;
 
-
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
 import net.gtaun.shoebill.Shoebill;
+import net.gtaun.shoebill.data.Color;
 import net.gtaun.shoebill.event.PlayerEventHandler;
 import net.gtaun.shoebill.event.player.PlayerCommandEvent;
 import net.gtaun.shoebill.object.Player;
 import net.gtaun.util.event.EventManager;
 import net.gtaun.util.event.ManagedEventManager;
 import net.gtaun.util.event.EventManager.HandlerPriority;
+import nl.ecb.samp.ericrp.building.interfaces.LockableBuilding;
+import nl.ecb.samp.ericrp.building.model.AbstractBuilding;
 import nl.ecb.samp.ericrp.building.model.Doorway;
 import nl.ecb.samp.ericrp.main.BuildingStore;
 import nl.ecb.samp.ericrp.main.DoorwayList;
@@ -71,6 +72,44 @@ public class BuildingInputController {
 						e.exit(p);
 					}
 				}
+				break;
+			}
+			case "/lock": {
+				ArrayList<Doorway> entrances = list.getEntrances();
+				for (Doorway e : entrances) {
+					if (e.getLocEnter().distance(p.getLocation()) < 5
+							|| e.getLocExit().distance(p.getLocation()) < 5) {
+						AbstractBuilding b = e.getBuilding();
+						if (b instanceof LockableBuilding) {
+							LockableBuilding lb = (LockableBuilding) b;
+							lb.setLocked(p, true);
+							return;
+						}
+						p.sendMessage(Color.RED,
+								"[ERROR]This building cannot be locked");
+						return;
+					}
+				}
+				p.sendMessage(Color.RED, "[ERROR]You're not near a door");
+				return;
+			}
+			case "/unlock": {
+				ArrayList<Doorway> entrances = list.getEntrances();
+				for (Doorway e : entrances) {
+					if (e.getLocEnter().distance(p.getLocation()) < 5
+							|| e.getLocExit().distance(p.getLocation()) < 5) {
+						AbstractBuilding b = e.getBuilding();
+						if (b instanceof LockableBuilding) {
+							LockableBuilding lb = (LockableBuilding) b;
+							lb.setLocked(p, false);
+							return;
+						}
+						p.sendMessage(Color.RED,
+								"[ERROR]This building cannot be unlocked");
+						return;
+					}
+				}
+				p.sendMessage(Color.RED, "[ERROR]You're not near a door");
 				break;
 			}
 
