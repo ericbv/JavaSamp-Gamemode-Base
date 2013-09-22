@@ -8,6 +8,7 @@ import net.gtaun.shoebill.object.Pickup;
 import net.gtaun.shoebill.object.Player;
 import net.gtaun.util.event.EventManager.HandlerPriority;
 import nl.ecb.samp.ericrp.main.CharacterStore;
+import nl.ecb.samp.ericrp.main.Main;
 
 public class Doorway {
 	private AbstractBuilding building;
@@ -18,7 +19,7 @@ public class Doorway {
 	public Doorway(Location locEnter, Location locExit,
 			AbstractBuilding building) {
 		this.locEnter = locEnter;
-		this.locEnter = locEnter;
+		this.locExit = locExit;
 		this.building = building;
 		entry = Shoebill.Instance.get().getSampObjectFactory().createPickup(building.getPickupid(), 1, locEnter);
 		Shoebill.Instance.get().getResourceManager().getGamemode().getEventManager().registerHandler(PlayerPickupEvent.class, playerEventHandler, HandlerPriority.NORMAL);
@@ -51,7 +52,7 @@ public class Doorway {
 	public void enter(Player p) {
 		if (!p.isInAnyVehicle()) {
 			if (building.attemptToEnter(p)) {
-				p.setLocation(locEnter);
+				p.setLocation(locExit);
 				return;
 			}
 		}
@@ -60,7 +61,7 @@ public class Doorway {
 	public void exit(Player p) {
 		if (!p.isInAnyVehicle()) {
 			if (building.attemptToExit(p)) {
-				p.setLocation(locExit);
+				p.setLocation(locEnter);
 				return;
 			}
 		}
@@ -70,8 +71,7 @@ public class Doorway {
 		public void onPlayerPickup(PlayerPickupEvent event){
 			if(event.getPickup().equals(entry)){
 				Player p = event.getPlayer();
-				//TODO add proper cooords
-				Shoebill.Instance.get().getSampObjectFactory().createPlayerTextdraw(p, 0, 0, building.getGameText());
+				p.sendGameText(2000, 4, building.getGameText());
 			}
 		}
 	};
