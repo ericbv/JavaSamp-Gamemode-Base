@@ -33,7 +33,7 @@ public class PoliceDepartment extends AbstractBuilding {
 
 	@Override
 	public String getGameText() {
-		return "~g~"+this.getClass().getName()+"~n~~w~type /enter to enter";
+		return "~g~"+this.getName()+"~n~~w~type /enter to enter";
 	}
 
 	public boolean isLockedDown() {
