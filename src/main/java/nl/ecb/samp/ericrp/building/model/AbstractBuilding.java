@@ -1,5 +1,6 @@
 package nl.ecb.samp.ericrp.building.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.gtaun.shoebill.object.Player;
@@ -11,9 +12,10 @@ public abstract class AbstractBuilding {
 
 	private String name;
 
-	public AbstractBuilding(String Name, int pickupid) {
+	public AbstractBuilding(String name, int pickupid) {
 		this.name = name;
 		this.pickupid = pickupid;
+		this.entrances = new ArrayList<Doorway>();
 	}
 
 	public abstract boolean attemptToEnter(Player p);
