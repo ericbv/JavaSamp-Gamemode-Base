@@ -53,14 +53,12 @@ public class PoliceDepartment extends AbstractBuilding implements
 
 	@Override
 	public String getExitMessage() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Welcome to the "+getName();
 	}
 
 	@Override
 	public String getEnterMessage() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Thanks for visiting "+getName();
 	}
 
 }
