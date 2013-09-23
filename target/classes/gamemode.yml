@@ -1,7 +1,0 @@
-class: nl.ecb.samp.ericrp.main.Main
-name: ERICRP
-version: 0.1.0-SNAPSHOT
-buildNumber: ${build.number}
-buildDate: Unknown
-authors: joh999
-description: 
