@@ -49,8 +49,6 @@ public class PoliceDepartment extends AbstractBuilding implements
 	@Override
 	public void lock(Player p) {
 		LockedDown = true;
-		p.sendMessage(Color.GREEN, "Door has been Locked");
-		
 	}
 
 	@Override

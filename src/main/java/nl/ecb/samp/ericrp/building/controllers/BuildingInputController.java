@@ -13,6 +13,8 @@ import net.gtaun.shoebill.object.Player;
 import net.gtaun.util.event.EventManager;
 import net.gtaun.util.event.ManagedEventManager;
 import net.gtaun.util.event.EventManager.HandlerPriority;
+import nl.ecb.samp.ericrp.building.exceptions.NotLockableException;
+import nl.ecb.samp.ericrp.building.exceptions.NotNearDoorException;
 import nl.ecb.samp.ericrp.building.interfaces.LockableBuilding;
 import nl.ecb.samp.ericrp.building.model.AbstractBuilding;
 import nl.ecb.samp.ericrp.building.model.Doorway;
@@ -75,41 +77,27 @@ public class BuildingInputController {
 				break;
 			}
 			case "/lock": {
-				ArrayList<Doorway> entrances = list.getEntrances();
-				for (Doorway e : entrances) {
-					if (e.getLocEnter().distance(p.getLocation()) < 5
-							|| e.getLocExit().distance(p.getLocation()) < 5) {
-						AbstractBuilding b = e.getBuilding();
-						if (b instanceof LockableBuilding) {
-							LockableBuilding lb = (LockableBuilding) b;
-							lb.lock(p);
-							return;
-						}
-						p.sendMessage(Color.RED,
-								"[ERROR]This building cannot be locked");
-						return;
-					}
+				try {
+					con.lock(p, con.getDoorway(p).getBuilding());
+					p.sendMessage(Color.GREEN, "Door has been Locked");
+				} catch (NotLockableException e1) {
+					p.sendMessage(Color.RED,
+							"[ERROR]This building cannot be locked");
+				} catch (NotNearDoorException e1) {
+					p.sendMessage(Color.RED, "[ERROR]You're not near a door");
 				}
-				p.sendMessage(Color.RED, "[ERROR]You're not near a door");
-				return;
+				break;
 			}
 			case "/unlock": {
-				ArrayList<Doorway> entrances = list.getEntrances();
-				for (Doorway e : entrances) {
-					if (e.getLocEnter().distance(p.getLocation()) < 5
-							|| e.getLocExit().distance(p.getLocation()) < 5) {
-						AbstractBuilding b = e.getBuilding();
-						if (b instanceof LockableBuilding) {
-							LockableBuilding lb = (LockableBuilding) b;
-							lb.unLock(p);
-							return;
-						}
-						p.sendMessage(Color.RED,
-								"[ERROR]This building cannot be unlocked");
-						return;
-					}
+				try {
+					con.unLock(p, con.getDoorway(p).getBuilding());
+					p.sendMessage(Color.GREEN, "Door has been Locked");
+				} catch (NotLockableException e1) {
+					p.sendMessage(Color.RED,
+							"[ERROR]This building cannot be locked");
+				} catch (NotNearDoorException e1) {
+					p.sendMessage(Color.RED, "[ERROR]You're not near a door");
 				}
-				p.sendMessage(Color.RED, "[ERROR]You're not near a door");
 				break;
 			}
 
