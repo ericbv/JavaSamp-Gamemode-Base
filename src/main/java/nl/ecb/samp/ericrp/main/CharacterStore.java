@@ -2,6 +2,7 @@ package nl.ecb.samp.ericrp.main;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import net.gtaun.shoebill.object.Player;
 import nl.ecb.samp.ericrp.character.exceptions.NoCharacterSelectedException;
@@ -34,10 +35,17 @@ public class CharacterStore {
 		if(!isOnCharacter(p)){
 			throw new NoCharacterSelectedException();
 		}
-		return characterList.get(p);
-		
-
+		return characterList.get(p);	
 	}
+	
+	public Player getPlayer(Character c) throws NoCharacterSelectedException{
+		Player p = getKeyByValue(characterList, c);
+		if(p == null){
+			throw new NoCharacterSelectedException();
+		}
+		return p;	
+	}
+	
 	public void setCharacter(Player p, Character character) throws playerAlreadyOnCharacterException{
 		if(isOnCharacter(p)){
 			throw new playerAlreadyOnCharacterException();
@@ -46,5 +54,13 @@ public class CharacterStore {
 	}
 	public void removeCharacter(Player p){
 		characterList.remove(p);
+	}
+	public static <T, E> T getKeyByValue(Map<T, E> map, E value) {
+	    for (Entry<T, E> entry : map.entrySet()) {
+	        if (value.equals(entry.getValue())) {
+	            return entry.getKey();
+	        }
+	    }
+	    return null;
 	}
 }
