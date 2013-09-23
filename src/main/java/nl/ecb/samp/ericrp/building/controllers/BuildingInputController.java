@@ -13,6 +13,7 @@ import net.gtaun.shoebill.object.Player;
 import net.gtaun.util.event.EventManager;
 import net.gtaun.util.event.ManagedEventManager;
 import net.gtaun.util.event.EventManager.HandlerPriority;
+import nl.ecb.samp.ericrp.building.exceptions.LockedDoorException;
 import nl.ecb.samp.ericrp.building.exceptions.NotLockableException;
 import nl.ecb.samp.ericrp.building.exceptions.NotNearDoorException;
 import nl.ecb.samp.ericrp.building.interfaces.LockableBuilding;
@@ -59,21 +60,29 @@ public class BuildingInputController {
 
 			switch (operation) {
 			case "/enter": {
-				ArrayList<Doorway> entrances = list.getEntrances();
-				for (Doorway e : entrances) {
-					if (e.getLocEnter().distance(p.getLocation()) < 5) {
-						e.enter(p);
-					}
+
+				try {
+					con.enter(p, con.getDoorway(p));
+				} catch (LockedDoorException e1) {
+					p.sendMessage(Color.RED,
+							"[ERROR]This building is locked you cannot enter.");
+				} catch (NotNearDoorException e1) {
+					p.sendMessage(Color.RED, "[ERROR]You're not near a door.");
 				}
+
 				break;
 			}
 			case "/exit": {
-				ArrayList<Doorway> entrances = list.getEntrances();
-				for (Doorway e : entrances) {
-					if (e.getLocExit().distance(p.getLocation()) < 5) {
-						e.exit(p);
-					}
+
+				try {
+					con.exit(p, con.getDoorway(p));
+				} catch (LockedDoorException e1) {
+					p.sendMessage(Color.RED,
+							"[ERROR]This building is locked you cannot exit.");
+				} catch (NotNearDoorException e1) {
+					p.sendMessage(Color.RED, "[ERROR]You're not near a door.");
 				}
+
 				break;
 			}
 			case "/lock": {

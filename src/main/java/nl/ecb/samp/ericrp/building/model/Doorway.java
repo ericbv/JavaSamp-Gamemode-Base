@@ -7,6 +7,7 @@ import net.gtaun.shoebill.event.player.PlayerPickupEvent;
 import net.gtaun.shoebill.object.Pickup;
 import net.gtaun.shoebill.object.Player;
 import net.gtaun.util.event.EventManager.HandlerPriority;
+import nl.ecb.samp.ericrp.building.exceptions.LockedDoorException;
 import nl.ecb.samp.ericrp.main.CharacterStore;
 import nl.ecb.samp.ericrp.main.Main;
 
@@ -21,8 +22,15 @@ public class Doorway {
 		this.locEnter = locEnter;
 		this.locExit = locExit;
 		this.building = building;
-		entry = Shoebill.Instance.get().getSampObjectFactory().createPickup(building.getPickupid(), 1, locEnter);
-		Shoebill.Instance.get().getResourceManager().getGamemode().getEventManager().registerHandler(PlayerPickupEvent.class, playerEventHandler, HandlerPriority.NORMAL);
+		entry = Shoebill.Instance.get().getSampObjectFactory()
+				.createPickup(building.getPickupid(), 1, locEnter);
+		Shoebill.Instance
+				.get()
+				.getResourceManager()
+				.getGamemode()
+				.getEventManager()
+				.registerHandler(PlayerPickupEvent.class, playerEventHandler,
+						HandlerPriority.NORMAL);
 	}
 
 	public AbstractBuilding getBuilding() {
@@ -49,27 +57,32 @@ public class Doorway {
 		this.locExit = locExit;
 	}
 
-	public void enter(Player p) {
+	public void enter(Player p) throws LockedDoorException {
 		if (!p.isInAnyVehicle()) {
-			if (building.attemptToEnter(p)) {
+			try{
+				building.attemptToEnter(p);
 				p.setLocation(locExit);
-				return;
+			}catch(LockedDoorException e) {
+				throw new LockedDoorException();	
 			}
 		}
 	}
 
-	public void exit(Player p) {
+	public void exit(Player p) throws LockedDoorException {
 		if (!p.isInAnyVehicle()) {
-			if (building.attemptToExit(p)) {
+			try {
+				building.attemptToExit(p);
 				p.setLocation(locEnter);
-				return;
+			} catch (LockedDoorException e) {
+				throw new LockedDoorException();
 			}
+
 		}
 	}
-	private PlayerEventHandler playerEventHandler = new PlayerEventHandler()
-	{
-		public void onPlayerPickup(PlayerPickupEvent event){
-			if(event.getPickup().equals(entry)){
+
+	private PlayerEventHandler playerEventHandler = new PlayerEventHandler() {
+		public void onPlayerPickup(PlayerPickupEvent event) {
+			if (event.getPickup().equals(entry)) {
 				Player p = event.getPlayer();
 				p.sendGameText(2000, 4, building.getGameText());
 			}

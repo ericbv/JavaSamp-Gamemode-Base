@@ -2,22 +2,26 @@ package nl.ecb.samp.ericrp.building.model;
 
 import net.gtaun.shoebill.data.Location;
 import net.gtaun.shoebill.object.Player;
+import nl.ecb.samp.ericrp.building.exceptions.LockedDoorException;
 
 public class VehicleDoorway extends Doorway {
 
-	public VehicleDoorway( Location locEnter, Location locExit,
+	public VehicleDoorway(Location locEnter, Location locExit,
 			AbstractBuilding building) {
 		super(locEnter, locExit, building);
 	}
 
 	@Override
-	public void enter(Player p) {
+	public void enter(Player p) throws LockedDoorException {
 		super.enter(p);
 		if (p.isInAnyVehicle()) {
-			if (getBuilding().attemptToEnter(p)) {
+			try {
+				getBuilding().attemptToEnter(p);
 				p.getVehicle().setLocation(getLocEnter());
-				return;
+			} catch (LockedDoorException e) {
+				throw new LockedDoorException();
 			}
+
 		} else {
 			super.enter(p);
 		}
@@ -25,12 +29,15 @@ public class VehicleDoorway extends Doorway {
 	}
 
 	@Override
-	public void exit(Player p) {
+	public void exit(Player p) throws LockedDoorException {
 		if (p.isInAnyVehicle()) {
-			if (getBuilding().attemptToExit(p)) {
+			try {
+				getBuilding().attemptToExit(p);
 				p.getVehicle().setLocation(getLocEnter());
-				return;
+			} catch (LockedDoorException e) {
+				throw new LockedDoorException();
 			}
+
 		} else {
 			super.exit(p);
 		}

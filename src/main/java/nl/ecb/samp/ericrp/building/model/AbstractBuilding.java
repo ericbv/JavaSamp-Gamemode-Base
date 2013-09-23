@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.gtaun.shoebill.object.Player;
+import nl.ecb.samp.ericrp.building.exceptions.LockedDoorException;
 
 public abstract class AbstractBuilding {
 	private List<Doorway> entrances;
@@ -18,9 +19,9 @@ public abstract class AbstractBuilding {
 		this.entrances = new ArrayList<Doorway>();
 	}
 
-	public abstract boolean attemptToEnter(Player p);
+	public abstract void attemptToEnter(Player p) throws LockedDoorException;
 
-	public abstract boolean attemptToExit(Player p);
+	public abstract void attemptToExit(Player p) throws LockedDoorException;
 
 	public abstract String getGameText();
 

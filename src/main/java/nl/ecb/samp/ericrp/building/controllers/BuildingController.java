@@ -9,6 +9,7 @@ import net.gtaun.shoebill.object.Player;
 import net.gtaun.util.event.EventManager;
 import net.gtaun.util.event.ManagedEventManager;
 import nl.ecb.samp.ericrp.building.Gouverment.PoliceDepartment;
+import nl.ecb.samp.ericrp.building.exceptions.LockedDoorException;
 import nl.ecb.samp.ericrp.building.exceptions.NotLockableException;
 import nl.ecb.samp.ericrp.building.exceptions.NotNearDoorException;
 import nl.ecb.samp.ericrp.building.interfaces.LockableBuilding;
@@ -74,12 +75,12 @@ public class BuildingController {
 		}
 	}
 
-	public void enter(Player p, AbstractBuilding b) {
-
+	public void enter(Player p, Doorway d) throws LockedDoorException{
+		d.enter(p);
 	}
 
-	public void exit(Player p, AbstractBuilding b) {
-
+	public void exit(Player p, Doorway d) throws LockedDoorException{
+		d.exit(p);
 	}
 
 	public Doorway getDoorway(Player p) throws NotNearDoorException {

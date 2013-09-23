@@ -2,6 +2,7 @@ package nl.ecb.samp.ericrp.building.Gouverment;
 
 import net.gtaun.shoebill.data.Color;
 import net.gtaun.shoebill.object.Player;
+import nl.ecb.samp.ericrp.building.exceptions.LockedDoorException;
 import nl.ecb.samp.ericrp.building.interfaces.LockableBuilding;
 import nl.ecb.samp.ericrp.building.model.AbstractBuilding;
 
@@ -15,25 +16,17 @@ public class PoliceDepartment extends AbstractBuilding implements
 	}
 
 	@Override
-	public boolean attemptToEnter(Player p) {
+	public void attemptToEnter(Player p) throws LockedDoorException {
 		if (this.isLocked()) {
-			p.sendMessage(Color.RED,
-					"[ERROR]This Building has been locked down.");
-			return false;
+			throw new LockedDoorException();
 		}
-		p.sendMessage(Color.WHITE,
-				"Welcome to " + this.getName() + " " + p.getName() + ".");
-		return true;
 	}
 
 	@Override
-	public boolean attemptToExit(Player p) {
+	public void attemptToExit(Player p) throws LockedDoorException {
 		if (this.isLocked()) {
-			p.sendMessage(Color.RED,
-					"[ERROR]This Building has been locked down.");
-			return false;
+			throw new LockedDoorException();
 		}
-		return true;
 	}
 
 	@Override
