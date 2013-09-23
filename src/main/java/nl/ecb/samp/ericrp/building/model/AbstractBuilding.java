@@ -25,6 +25,10 @@ public abstract class AbstractBuilding {
 
 	public abstract String getGameText();
 
+	public abstract String getExitMessage();
+	
+	public abstract String getEnterMessage();
+	
 	public int getPickupid() {
 		return pickupid;
 	}

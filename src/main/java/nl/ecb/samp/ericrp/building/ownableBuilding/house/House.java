@@ -26,6 +26,18 @@ public class House extends AbstractOwnableBuilding {
 		return null;
 	}
 
+	@Override
+	public String getExitMessage() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getEnterMessage() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 
 }

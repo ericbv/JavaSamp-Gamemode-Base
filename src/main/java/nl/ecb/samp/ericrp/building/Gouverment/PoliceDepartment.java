@@ -51,4 +51,16 @@ public class PoliceDepartment extends AbstractBuilding implements
 		
 	}
 
+	@Override
+	public String getExitMessage() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getEnterMessage() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

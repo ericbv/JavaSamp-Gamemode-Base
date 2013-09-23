@@ -62,7 +62,9 @@ public class BuildingInputController {
 			case "/enter": {
 
 				try {
-					con.enter(p, con.getDoorway(p));
+					Doorway d = con.getDoorway(p);
+					con.enter(p, d);
+					p.sendMessage(Color.GREEN, d.getBuilding().getEnterMessage());
 				} catch (LockedDoorException e1) {
 					p.sendMessage(Color.RED,
 							"[ERROR]This building is locked you cannot enter.");
@@ -75,7 +77,9 @@ public class BuildingInputController {
 			case "/exit": {
 
 				try {
-					con.exit(p, con.getDoorway(p));
+					Doorway d = con.getDoorway(p);
+					con.exit(p, d);
+					p.sendMessage(Color.GREEN, d.getBuilding().getExitMessage());
 				} catch (LockedDoorException e1) {
 					p.sendMessage(Color.RED,
 							"[ERROR]This building is locked you cannot exit.");
