@@ -19,6 +19,7 @@ import nl.ecb.samp.ericrp.building.exceptions.NotNearDoorException;
 import nl.ecb.samp.ericrp.building.interfaces.LockableBuilding;
 import nl.ecb.samp.ericrp.building.model.AbstractBuilding;
 import nl.ecb.samp.ericrp.building.model.Doorway;
+import nl.ecb.samp.ericrp.building.ownableBuilding.exceptions.NotOwner;
 import nl.ecb.samp.ericrp.main.BuildingStore;
 import nl.ecb.samp.ericrp.main.DoorwayList;
 import nl.ecb.samp.ericrp.main.Main;
@@ -98,6 +99,8 @@ public class BuildingInputController {
 							"[ERROR]This building cannot be locked");
 				} catch (NotNearDoorException e1) {
 					p.sendMessage(Color.RED, "[ERROR]You're not near a door");
+				} catch (NotOwner e) {
+					p.sendMessage(Color.RED, "[ERROR]you cannot unlock this building because you do not own it.");
 				}
 				break;
 			}
@@ -110,6 +113,8 @@ public class BuildingInputController {
 							"[ERROR]This building cannot be locked");
 				} catch (NotNearDoorException e1) {
 					p.sendMessage(Color.RED, "[ERROR]You're not near a door");
+				} catch (NotOwner e) {
+					p.sendMessage(Color.RED, "[ERROR]you cannot lock this building because you do not own it.");
 				}
 				break;
 			}

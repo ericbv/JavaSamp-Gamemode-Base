@@ -5,8 +5,8 @@ import nl.ecb.samp.ericrp.building.ownableBuilding.AbstractOwnableBuilding;
 
 public class House extends AbstractOwnableBuilding {
 
-	public House(String name, int pickupid) {
-		super(name, pickupid);
+	public House(String name, int pickupid,Integer price) {
+		super(name, pickupid,price);
 		// TODO Auto-generated constructor stub
 	}
 

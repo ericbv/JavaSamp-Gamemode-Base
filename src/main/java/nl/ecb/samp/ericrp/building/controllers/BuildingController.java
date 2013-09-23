@@ -15,6 +15,7 @@ import nl.ecb.samp.ericrp.building.exceptions.NotNearDoorException;
 import nl.ecb.samp.ericrp.building.interfaces.LockableBuilding;
 import nl.ecb.samp.ericrp.building.model.AbstractBuilding;
 import nl.ecb.samp.ericrp.building.model.Doorway;
+import nl.ecb.samp.ericrp.building.ownableBuilding.exceptions.NotOwner;
 import nl.ecb.samp.ericrp.main.BuildingStore;
 import nl.ecb.samp.ericrp.main.DoorwayList;
 
@@ -57,7 +58,7 @@ public class BuildingController {
 		}
 	}
 
-	public void lock(Player p, AbstractBuilding b) throws NotLockableException {
+	public void lock(Player p, AbstractBuilding b) throws NotLockableException, NotOwner {
 		if (b instanceof LockableBuilding) {
 			LockableBuilding lb = (LockableBuilding) b;
 			lb.lock(p);
@@ -66,7 +67,7 @@ public class BuildingController {
 		}
 	}
 
-	public void unLock(Player p, AbstractBuilding b) throws NotLockableException {
+	public void unLock(Player p, AbstractBuilding b) throws NotLockableException, NotOwner {
 		if (b instanceof LockableBuilding) {
 			LockableBuilding lb = (LockableBuilding) b;
 			lb.unLock(p);
